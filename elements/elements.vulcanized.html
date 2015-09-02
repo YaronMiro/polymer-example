@@ -11271,17 +11271,12 @@ module.exports = Array.isArray || function (arr) {
       app.route = 'home';
     });
 
-    page('/users', function () {
-      app.route = 'users';
+    page('/demo-1', function () {
+      app.route = 'demo-1';
     });
 
-    page('/users/:name', function (data) {
-      app.route = 'user-info';
-      app.params = data.params;
-    });
-
-    page('/contact', function () {
-      app.route = 'contact';
+    page('/demo-2', function () {
+      app.route = 'demo-2';
     });
 
     // add #! before urls
