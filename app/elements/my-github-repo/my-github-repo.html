@@ -1,0 +1,52 @@
+<dom-module id="my-github-repo">
+  <style>
+    :host {
+      display: block;
+    }
+
+    input {
+      width: 100%;
+    }
+
+    @media (max-width: 600px) {
+      h1.paper-font-display1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+  <template>
+    <span class="paper-font-body2">Change the target repository e.g: ownerName/repositoryName</span>
+    <!-- Listens for "input" event and sets the target repository to <input>.value -->
+    <input class="paper-font-body2" value="{{targetRepository::input}}" placeholder="Please enter repository name">
+
+    <!-- Ajax call to Github API -->
+    <iron-ajax auto
+        url="https://api.github.com/repos/YaronMiro/AngularJS-UI-Router-Demo" 
+        handle-as="json"
+        last-response="{{ajaxResponse}}"></iron-ajax>
+
+    <h3>Repository info:</h3>
+    <section class="flex layout horizontal wrap">
+      <a href="{{ajaxResponse.html_url}}">{{ajaxResponse.full_name}}</a>
+      <iron-image style="width:100px; height:100px;" sizing="contain" src="{{ajaxResponse.owner.avatar_url}}"></iron-image>
+    </section>
+
+  </template>
+
+  <script>
+    (function() {
+      Polymer({
+        is: 'my-github-repo',
+
+        properties: {
+          targetRepository: {
+            type: String,
+            value: 'YaronMiro/AngularJS-UI-Router-Demo',
+            notify: true
+          }
+        }
+      });
+    })();
+  </script>
+
+</dom-module>
