@@ -8,40 +8,42 @@
       width: 100%;
     }
 
-    @media (max-width: 600px) {
-      h1.paper-font-display1 {
-        font-size: 24px;
-      }
-    }
   </style>
   <template>
-    <span class="paper-font-body2">Change the target repository e.g: ownerName/repositoryName</span>
+    <span class="paper-font-body2">Fill the fields to get an info about the repository (only for public repositories)
+    <br>
+    <span>e.g: YaronMiro/AngularJS-UI-Router-Demo</span>
+    </span>
     <!-- Listens for "input" event and sets the target repository to <input>.value -->
-    <input class="paper-font-body2" value="{{targetRepository::input}}" placeholder="Please enter repository name">
+    <paper-input label="Owner" class="paper-font-body2" value="{{owner::input}}"></paper-input>
+    <paper-input label="Name" class="paper-font-body2" value="{{name::input}}"></paper-input>
 
     <!-- Ajax call to Github API -->
+    <!-- https://api.github.com/repos/YaronMiro/AngularJS-UI-Router-Demo -->
     <iron-ajax auto
-        url="https://api.github.com/repos/YaronMiro/AngularJS-UI-Router-Demo" 
+        url="setValue"
         handle-as="json"
         last-response="{{ajaxResponse}}"></iron-ajax>
 
-    <h3>Repository info:</h3>
-    <section class="flex layout horizontal wrap">
+    <section>
       <a href="{{ajaxResponse.html_url}}">{{ajaxResponse.full_name}}</a>
       <iron-image style="width:100px; height:100px;" sizing="contain" src="{{ajaxResponse.owner.avatar_url}}"></iron-image>
     </section>
-
   </template>
 
   <script>
     (function() {
       Polymer({
         is: 'my-github-repo',
-
         properties: {
-          targetRepository: {
+          owner: {
             type: String,
-            value: 'YaronMiro/AngularJS-UI-Router-Demo',
+            value: 'YaronMiro',
+            notify: true
+          },
+          name: {
+            type: String,
+            value: 'AngularJS-UI-Router-Demo',
             notify: true
           }
         }
