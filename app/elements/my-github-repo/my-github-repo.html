@@ -7,12 +7,6 @@
     input {
       width: 100%;
     }
-
-    @media (max-width: 600px) {
-      h1.paper-font-display1 {
-        font-size: 24px;
-      }
-    }
   </style>
   <template>
     <span class="paper-font-body2">Change the target repository e.g: ownerName/repositoryName</span>
@@ -21,7 +15,7 @@
 
     <!-- Ajax call to Github API -->
     <iron-ajax auto
-        url="https://api.github.com/repos/YaronMiro/AngularJS-UI-Router-Demo" 
+        url="{{getUrl}}" 
         handle-as="json"
         last-response="{{ajaxResponse}}"></iron-ajax>
 
@@ -43,6 +37,9 @@
             type: String,
             value: 'YaronMiro/AngularJS-UI-Router-Demo',
             notify: true
+          },
+          getUrl: function() {N
+          return 'https://api.github.com/repos/' + this.targetRepository;
           }
         }
       });
