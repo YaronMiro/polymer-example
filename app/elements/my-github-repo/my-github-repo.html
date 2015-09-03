@@ -10,7 +10,6 @@
 
   </style>
   <template>
-    <p>{{owner}}/{{name}}</p>
     <span class="paper-font-body2">Fill the fields to get an info about the repository (only for public repositories)
     <br>
     <span>e.g: YaronMiro/AngularJS-UI-Router-Demo</span>
@@ -46,9 +45,6 @@
             type: String,
             value: 'AngularJS-UI-Router-Demo',
             notify: true
-          },
-          getUrl: function() {N
-          return 'https://api.github.com/repos/' + this.targetRepository;
           }
         }
       });
