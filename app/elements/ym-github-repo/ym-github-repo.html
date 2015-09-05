@@ -15,21 +15,23 @@
     <span>e.g: YaronMiro/AngularJS-UI-Router-Demo</span>
     </span>
     <!-- Listens for "input" event and sets the target repository to <input>.value -->
-    <paper-input label="Owner" class="paper-font-body2" value="{{repository.owner::input}}"></paper-input>
-    <paper-input label="Name" class="paper-font-body2" value="{{repository.name::input}}"></paper-input>
-    <button onclick="getUrl">sss</button>
-    <div>{{repository.owner}}/{{repository.name}}</div>
+    <paper-input label="Owner" class="paper-font-body2" value="{{repository.owner}}"></paper-input>
+    <paper-input label="Name" class="paper-font-body2" value="{{repository.name}}"></paper-input>
+    <button on-click="handleClick">sss</button>
     <!-- Ajax call to Github API -->
     <!-- https://api.github.com/repos/YaronMiro/AngularJS-UI-Router-Demo -->
-    <iron-ajax auto
-        url="{{repository.owner}}"
+    <iron-ajax
+        auto
+        id="iron-ajax"
+        url="{{url}}"
         handle-as="json"
-        last-response="{{githubResponse}}"></iron-ajax>
+        last-response="{{ajax.response}}"
+        last-error="{{ajax.error}}"></iron-ajax>
 
     <section>
-      <div is="dom-if" if="{{githubResponse.id}}" class="info-wrapper">
-        <a href="{{githubResponse.html_url}}">{{githubResponse.full_name}}</a>
-        <iron-image style="width:100px; height:100px;" sizing="contain" src="{{githubResponse.owner.avatar_url}}"></iron-image>
+      <div is="dom-if" if="{{ajax.error.id}}" class="info-wrapper">
+        <a href="{{ajax.response.html_url}}">{{ajax.response.full_name}}</a>
+        <iron-image style="width:100px; height:100px;" sizing="contain" src="{{ajax.response.owner.avatar_url}}"></iron-image>
       </div>
     </section>
   </template>
@@ -38,25 +40,40 @@
     (function() {
       Polymer({
         is: 'ym-github-repo',
-        listeners: {
-          'error': 'error'
-        },
-        error: function(event, element) {
-          console.log(event.);
-          console.log(element);
-        },
-        ready: function() {
-          console.log(this.repository);
+        handleClick: function() {
+          console.log(this);
         },
         properties: {
           repository: {
             type: Object,
             value: {
-              owner: 'https://api.github.com/repos/YaronMiro/AngularJS-UI-Router-Demo',
+              owner: 'YaronMiro1',
               name: 'AngularJS-UI-Router-Demo'
             },
             notify: true
+          },
+          ajax: {
+            type: Object,
+            value: {
+              error: {},
+              response: {}
+            },
+            notify: true
+          },
+          url: {
+            type: String,
+            computed: 'getUrl(repository)'
           }
+        },
+        getUrl: function(repository) {
+          console.log(this);
+          return 'https://api.github.com/repos/' + repository.owner + '/' + repository.name;
+        },
+        listeners: {
+          'error': 'error'
+        },
+        error: function(event, element) {
+          console.log(this.$);
         }
       });
     })();
