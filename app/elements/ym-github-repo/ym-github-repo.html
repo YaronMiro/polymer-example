@@ -15,16 +15,19 @@
     <span>e.g: YaronMiro/AngularJS-UI-Router-Demo</span>
     </span>
     <!-- Listens for "input" event and sets the target repository to <input>.value -->
-    <paper-input label="Owner" class="paper-font-body2" value="{{repository.owner}}"></paper-input>
-    <paper-input label="Name" class="paper-font-body2" value="{{repository.name}}"></paper-input>
-    <button on-click="handleClick">sss</button>
+    <paper-input label="Owner" class="paper-font-body2" value="{{owner}}"></paper-input>
+    <paper-input label="Name" class="paper-font-body2" value="{{name}}"></paper-input>
+    <div>
+      <span>{{ owner }}</span>/<span>{{ name }}</span>
+    </div>
     <!-- Ajax call to Github API -->
     <!-- https://api.github.com/repos/YaronMiro/AngularJS-UI-Router-Demo -->
-    <iron-ajax
-        auto
+    <iron-ajax auto
         id="ajax"
         url="{{url}}"
         handle-as="json"
+        on-response="onResponse"
+        on-error="onError"
         last-response="{{ajax.response}}"></iron-ajax>
 
     <section>
@@ -40,18 +43,18 @@
 
       Polymer({
         is: 'ym-github-repo',
-        handleClick: function() {
-          this.$.ajax.url='https://api.github.com/repos/YaronMiro/AngularJS-UI-Router-Demo';
-          this.$.ajax.generateRequest();
-        },
         properties: {
-          repository: {
-            type: Object,
-            value: {
-              owner: 'Gizra',
-              name: 'gizra',
-              test: 'https://api.github.com/repos/YaronMiro/AngularJS-UI-Router-Demo'
-            }
+          owner: {
+            type: String,
+            value: 'yaronMiro'
+          },
+          name: {
+            type: String,
+            value: 'AngularJS-UI-Router-Demo'
+          },
+          url: {
+            type: String,
+            computed: 'getUrl(owner, name)'
           },
           ajax: {
             type: Object,
@@ -59,21 +62,20 @@
               error: {},
               response: {}
             }
-          },
-          url: {
-            type: String,
-            computed: 'getUrl(repository)'
           }
         },
-        getUrl: function(repository) {
-          console.log(repository);
-          return 'https://api.github.com/repos/' + repository.owner + '/' + repository.name;
+        getUrl: function(owner, name) {
+          return 'https://api.github.com/repos/' + owner + '/' + name;
         },
-        listeners: {
-          'error': 'error'
+        onResponse: function(data, b) {
+         console.log('From on-response', data);
+         console.log('From on-response', b);
+         console.log('From on-response', this.$);
         },
-        error: function(event, element) {
-          console.log(this.$);
+        onError: function(data, b) {
+         console.log('From on-error', data);
+          console.log('From on-response', b);
+          console.log('From on-response', data);
         }
       });
     })();
