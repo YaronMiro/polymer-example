@@ -28,11 +28,14 @@
       border: 1px solid rgba(128, 128, 128, 0.74);
     }
 
-    code {
-      border-radius: 3px;
-      display: inline-block;
-      padding: 10px;
-      background: rgb(243, 243, 243);
+    .paper-font-code1 {
+      font-weight: 400;
+      background-color: rgba(128, 128, 128, 0.16);
+      padding: 5px;
+    }
+
+    paper-button {
+      float: right
     }
 
 
@@ -48,19 +51,17 @@
       <paper-input label="Owner" class="paper-font-body2" value="{{owner}}"></paper-input>
       <paper-input label="Name" class="paper-font-body2" value="{{name}}"></paper-input>
       <!-- Search button -->
-      <paper-button gray-ripple> <iron-icon icon="icons:search"></iron-icon> Search</paper-button>
+      <paper-button gray-ripple>Get info <iron-icon icon="icons:search"></iron-icon></paper-button>
 
       <paper-fab mini icon="favorite"></paper-fab>
 
-      <p>Search url</p>
+      <p>Github API repository url</p>
       <p>
-        <code>
-          <span>{{url}}</span>
-        </code>
+        <span class="paper-font-code1">{{url}}</span>
       </p>
       <!-- Ajax call to Github API -->
       <!-- https://api.github.com/repos/YaronMiro/AngularJS-UI-Router-Demo -->
-      <iron-ajax auto
+      <iron-ajax auto1
                  id="ajax"
                  url="{{url}}"
                  handle-as="json"
