@@ -1,8 +1,23 @@
 <dom-module id="ym-github-repo">
   <style>
     :host {
-      display: block;
+      display: inline-block;
     }
+
+    .info {
+      list-style-type: none;
+      padding: 0px;
+    }
+
+    .info li {
+
+    }
+
+    .info image {
+      width:100px;
+      height:100px
+    }
+
 
     input {
       width: 100%;
@@ -10,15 +25,31 @@
 
   </style>
   <template>
+
+    <p>If we want to get this block then all we need to include on the html markup is the following element:</p>
+    <div>
+      <pre>
+        <code>
+          &lt;ym-github-repo&gt;&lt;/ym-github-repo&gt;
+        </code>
+      </pre>
+    </div>
+
     <span class="paper-font-body2">Fill the fields to get an info about the repository (only for public repositories)
     <br>
-    <span>e.g: YaronMiro/AngularJS-UI-Router-Demo</span>
+    <span>e.g: Gizra/gizra</span>
     </span>
-    <!-- Listens for "input" event and sets the target repository to <input>.value -->
+    <!-- Two-way binding for "<input>.value" -->
     <paper-input label="Owner" class="paper-font-body2" value="{{owner}}"></paper-input>
     <paper-input label="Name" class="paper-font-body2" value="{{name}}"></paper-input>
+    <!---->
+    <paper-button raised>
+      <iron-icon icon="favorite"></iron-icon>
+      custom button content
+    </paper-button>
+
     <div>
-      <span>{{ owner }}</span>/<span>{{ name }}</span>
+      <span>{{url}}</span>
     </div>
     <!-- Ajax call to Github API -->
     <!-- https://api.github.com/repos/YaronMiro/AngularJS-UI-Router-Demo -->
@@ -32,8 +63,20 @@
 
     <section>
       <div class="info-wrapper">
-        <a href="{{ajax.response.html_url}}">{{ajax.response.full_name}}</a>
-        <iron-image style="width:100px; height:100px;" sizing="contain" src="{{ajax.response.owner.avatar_url}}"></iron-image>
+        <!-- Repo info -->
+        <ul class="info">
+          <li>
+            <div>owner: </div>
+            <a href="{{ajax.response.owner.url}}">{{ajax.response.owner.login}}</a>
+          </li>
+          <li>
+            <a href="{{ajax.response.html_url}}">{{ajax.response.name}}</a>
+          </li>
+          <li>Public repository</li>
+          <li>Stars: <span>{{ajax.response.stargazers_count}}</span></li>
+          <li><iron-image sizing="contain" src="{{ajax.response.owner.avatar_url}}"></iron-image></li>
+          <li></li>
+        </ul>
       </div>
     </section>
   </template>
@@ -59,7 +102,6 @@
           ajax: {
             type: Object,
             value: {
-              error: {},
               response: {}
             }
           }
