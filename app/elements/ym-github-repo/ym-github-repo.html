@@ -45,28 +45,13 @@
   </style>
   <template>
 
-    <p>Including this element will produce the the github</p>
-    <p>
-      <code>
-        &lt;ym-github-repo&gt;&lt;/ym-github-repo&gt;
-      </code>
-    </p>
-
     <div class="github-repo-wrapper">
-      <span class="paper-font-body2">Fill the fields to get an info about the repository (only for public repositories)
-    <br>
-    <span>e.g: Gizra/gizra</span>
-    </span>
       <!-- Two-way binding for "<input>.value" -->
       <paper-input label="Owner" class="paper-font-body2" value="{{owner}}"></paper-input>
       <paper-input label="Name" class="paper-font-body2" value="{{name}}"></paper-input>
-      <!---->
-      <paper-button gray-ripple>
-        <iron-icon icon="icons:search"></iron-icon>
-        Search
-      </paper-button>
+      <!-- Search button -->
+      <paper-button gray-ripple> <iron-icon icon="icons:search"></iron-icon> Search</paper-button>
 
-      //@todo remove this ?
       <paper-fab mini icon="favorite"></paper-fab>
 
       <p>Search url</p>
