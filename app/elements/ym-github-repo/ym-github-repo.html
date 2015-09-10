@@ -56,7 +56,6 @@
     }
 
     paper-button::shadow paper-ripple {
-      border: 1px solid black;
     }
 
     input, paper-button {
@@ -71,7 +70,8 @@
       <paper-input label="Owner" class="paper-font-body2" value="{{owner}}"></paper-input>
       <paper-input label="Name" class="paper-font-body2" value="{{name}}"></paper-input>
       <!-- Search button -->
-      <p><paper-button gray-ripple on-click="gettingRepositoryInfo">get repository info</paper-button></p>
+      
+      <p><paper-button gray-ripple raised on-click="gettingRepositoryInfo">get repository info</paper-button></p>
 
       <div class="paper-font-title">Github API repository url</div>
       <div class="paper-font-code1 url">{{url}}</div>
@@ -89,11 +89,11 @@
          on-response="onAjaxResponse"
          last-response="{{ajax.response}}">
        </iron-ajax>
-      <section class="info-wrapper">
+      <section class="info-wrapper" hidden$="{{!message.status}}">
           <!-- Ajax response data render to markup -->
           <ul class="info">
             <li>
-              <div>owner: </div>
+              <div>owner:</div>
               <a href="{{ajax.response.owner.url}}">{{ajax.response.owner.login}}</a>
             </li>
             <li class="image"><iron-image preload fade sizing="contain" src="{{ajax.response.owner.avatar_url}}"></iron-image></li>
@@ -121,10 +121,10 @@
           return 'https://api.github.com/repos/' + owner + '/' + name;
         },
         onAjaxError: function() {
-        this.set('message', { class: 'error', text: 'No matching repository was found :('} );
+        this.set('message', { class: 'error', status: false, text: 'No matching repository was found :('} );
         },
         onAjaxSucces: function() {
-         this.set('message', { class: 'success', text: 'A Repository match was found! :)'} );
+         this.set('message', { class: 'success', status: true,  text: 'A Repository match was found! :)'} );
         },
       };
 
@@ -143,7 +143,8 @@
             type: Object,
             value: {
               text: '',
-              class: ''
+              class: '',
+              status: false
             }
           },
           url: {
@@ -153,7 +154,7 @@
           ajax: {
             type: Object,
             value: {
-              response: {}
+              response: {},
             }
           }
         },
