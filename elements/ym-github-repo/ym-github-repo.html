@@ -1,0 +1,167 @@
+<dom-module id="ym-github-repo">
+  <style>
+
+    :host {
+      display: block;
+    }
+
+    .github-repo-wrapper {
+      padding: 8px;
+    }
+
+    .info {
+      list-style-type: none;
+      padding: 0px;
+    }
+
+    .success, .error {
+      color: white;
+    }
+
+    .success {
+      background: green;
+    }
+
+    .error {
+      background: red;
+    }
+
+    iron-image {
+      width:100px;
+      height:100px;
+      background-color: lightgray;
+    }
+
+    .image {
+      display: inline-block;
+      padding: 8px;
+      border: 1px solid rgba(128, 128, 128, 0.74);
+    }
+
+
+    .url {
+      margin-top: 5px;
+      display: inline-block;
+    }
+
+    .paper-font-code1 {
+      border-radius: 3px;
+      font-weight: 400;
+      background-color: rgba(128, 128, 128, 0.16);
+      padding: 5px 7px 5px 7px;
+    }
+
+    paper-button {
+      margin: 0px;
+    }
+
+    paper-button::shadow paper-ripple {
+    }
+
+    input, paper-button {
+      width: 100%;
+    }
+
+  </style>
+  <template>
+
+    <div class="github-repo-wrapper">
+      <!-- Two-way binding for "<input>.value" -->
+      <paper-input label="Owner" class="paper-font-body2" value="{{owner}}"></paper-input>
+      <paper-input label="Name" class="paper-font-body2" value="{{name}}"></paper-input>
+      <!-- Search button -->
+      
+      <p><paper-button gray-ripple raised on-click="gettingRepositoryInfo">get repository info</paper-button></p>
+
+      <div class="paper-font-title">Github API repository url</div>
+      <div class="paper-font-code1 url">{{url}}</div>
+
+      <div class="paper-font-title">Status:</div>
+      <div> <span hidden$="{{!message.text}}" class$="{{message.class}}">{{message.text}}</span></div>
+        
+
+      <!-- Ajax call to Github API -->
+      <iron-ajax
+         id="ajax"
+         url="{{url}}"
+         handle-as="json"
+         on-error="onAjaxError"
+         on-response="onAjaxResponse"
+         last-response="{{ajax.response}}">
+       </iron-ajax>
+      <section class="info-wrapper" hidden$="{{!message.status}}">
+          <!-- Ajax response data render to markup -->
+          <ul class="info">
+            <li>
+              <div>owner:</div>
+              <a href="{{ajax.response.owner.url}}">{{ajax.response.owner.login}}</a>
+            </li>
+            <li class="image"><iron-image preload fade sizing="contain" src="{{ajax.response.owner.avatar_url}}"></iron-image></li>
+            <li>
+              <a href="{{ajax.response.html_url}}">{{ajax.response.name}}</a>
+            </li>
+            <li>Public repository</li>
+            <li>Stars: <span>{{ajax.response.stargazers_count}}</span></li>
+            <li></li>
+          </ul>
+      </section>
+    </div>
+  </template>
+
+  <script>
+    (function() {
+
+      var api = {
+        gettingRepositoryInfo: function() {
+          this.$.ajax.generateRequest();
+        },
+        settingRequestUrl: function(owner, name) {
+          return 'https://api.github.com/repos/' + owner + '/' + name;
+        },
+        onAjaxError: function() {
+        this.set('message', { class: 'error', status: false, text: 'No matching repository was found :('} );
+        },
+        onAjaxSucces: function() {
+         this.set('message', { class: 'success', status: true,  text: 'A Repository match was found! :)'} );
+        },
+      };
+
+      Polymer({
+        is: 'ym-github-repo',
+        properties: {
+          owner: {
+            type: String,
+            value: 'yaronMiro'
+          },
+          name: {
+            type: String,
+            value: 'AngularJS-UI-Router-Demo'
+          },
+          message: {
+            type: Object,
+            value: {
+              text: '',
+              class: '',
+              status: false
+            }
+          },
+          url: {
+            type: String,
+            computed: 'settingRequestUrl(owner, name)'
+          },
+          ajax: {
+            type: Object,
+            value: {
+              response: {},
+            }
+          }
+        },
+        settingRequestUrl: api.settingRequestUrl,
+        gettingRepositoryInfo: api.gettingRepositoryInfo,
+        onAjaxError: api.onAjaxError,
+        onAjaxResponse: api.onAjaxSucces
+      });
+    })();
+  </script>
+
+</dom-module>
