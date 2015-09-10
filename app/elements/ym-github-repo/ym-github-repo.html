@@ -1,5 +1,6 @@
 <dom-module id="ym-github-repo">
   <style>
+
     :host {
       display: block;
     }
@@ -28,18 +29,31 @@
       border: 1px solid rgba(128, 128, 128, 0.74);
     }
 
+    .url-wrapper {
+      clear: both;
+    }
+
+    .url-wrapper .url {
+      margin-top: 5px;
+      display: inline-block;
+    }
+
     .paper-font-code1 {
+      border-radius: 3px;
       font-weight: 400;
       background-color: rgba(128, 128, 128, 0.16);
-      padding: 5px;
+      padding: 5px 7px 5px 7px;
     }
 
     paper-button {
-      float: right
+      margin: 0px;
     }
 
+    paper-button::shadow paper-ripple {
+      border: 1px solid black;
+    }
 
-    input {
+    input, paper-button {
       width: 100%;
     }
 
@@ -51,17 +65,17 @@
       <paper-input label="Owner" class="paper-font-body2" value="{{owner}}"></paper-input>
       <paper-input label="Name" class="paper-font-body2" value="{{name}}"></paper-input>
       <!-- Search button -->
-      <paper-button gray-ripple>Get info <iron-icon icon="icons:search"></iron-icon></paper-button>
+      <p><paper-button gray-ripple>get repository info</paper-button></p>
 
       <paper-fab mini icon="favorite"></paper-fab>
 
-      <p>Github API repository url</p>
-      <p>
-        <span class="paper-font-code1">{{url}}</span>
-      </p>
+      <div class="url-wrapper">
+        <div class="paper-font-title">Github API repository url</div>
+        <div class="paper-font-code1 url">{{url}}</div>
+      </div>
       <!-- Ajax call to Github API -->
       <!-- https://api.github.com/repos/YaronMiro/AngularJS-UI-Router-Demo -->
-      <iron-ajax auto1
+      <iron-ajax auto
                  id="ajax"
                  url="{{url}}"
                  handle-as="json"
@@ -69,15 +83,14 @@
                  on-error="onError"
                  last-response="{{ajax.response}}"></iron-ajax>
 
-      <section>
-        <div class="info-wrapper">
+      <section class="info-wrapper">
           <!-- Repo info -->
           <ul class="info">
             <li>
               <div>owner: </div>
               <a href="{{ajax.response.owner.url}}">{{ajax.response.owner.login}}</a>
             </li>
-            <li class="image"><iron-image sizing="contain" src="{{ajax.response.owner.avatar_url}}"></iron-image></li>
+            <li class="image"><iron-image preload fade sizing="contain" src="{{ajax.response.owner.avatar_url}}"></iron-image></li>
             <li>
               <a href="{{ajax.response.html_url}}">{{ajax.response.name}}</a>
             </li>
@@ -85,7 +98,6 @@
             <li>Stars: <span>{{ajax.response.stargazers_count}}</span></li>
             <li></li>
           </ul>
-        </div>
       </section>
     </div>
   </template>
