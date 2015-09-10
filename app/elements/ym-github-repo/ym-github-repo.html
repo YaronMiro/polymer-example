@@ -14,13 +14,22 @@
       padding: 0px;
     }
 
-    .info li {
+    .success, .error {
+      color: white;
+    }
 
+    .success {
+      background: green;
+    }
+
+    .error {
+      background: red;
     }
 
     iron-image {
       width:100px;
-      height:100px
+      height:100px;
+      background-color: lightgray;
     }
 
     .image {
@@ -29,11 +38,8 @@
       border: 1px solid rgba(128, 128, 128, 0.74);
     }
 
-    .url-wrapper {
-      clear: both;
-    }
 
-    .url-wrapper .url {
+    .url {
       margin-top: 5px;
       display: inline-block;
     }
@@ -67,14 +73,16 @@
       <!-- Search button -->
       <p><paper-button gray-ripple on-click="gettingRepositoryInfo">get repository info</paper-button></p>
 
-      <paper-fab mini icon="favorite"></paper-fab>
+      <div class="paper-font-title">Github API repository url</div>
+      <div class="paper-font-code1 url">{{url}}</div>
 
-      <div class="url-wrapper">
-        <div class="paper-font-title">Github API repository url</div>
-        <div class="paper-font-code1 url">{{url}}</div>
+      <div class="paper-font-title">Status:</div>
+      <div class="paper-font-code1">
+        <span class="{{ {error: message.error, success: !message.error } | tokenList }}">{{message.text}}</span>
       </div>
+        
+
       <!-- Ajax call to Github API -->
-      <!-- https://api.github.com/repos/YaronMiro/AngularJS-UI-Router-Demo -->
       <iron-ajax
          id="ajax"
          url="{{url}}"
@@ -83,10 +91,8 @@
          on-response="onAjaxResponse"
          last-response="{{ajax.response}}">
        </iron-ajax>
-      <h2><span>{{ error }}</span></h2>
-
       <section class="info-wrapper" hidden$="{{error}}">
-          <!-- Repo info -->
+          <!-- Ajax response data render to markup -->
           <ul class="info">
             <li>
               <div>owner: </div>
@@ -107,31 +113,43 @@
   <script>
     (function() {
 
-      var Api = {
-        onEnter: function() {
-            this.showResults = false;
-        },
+      var app = document.querySelector('ym-github-repo');
+
+      var api = {
         gettingRepositoryInfo: function() {
           this.$.ajax.generateRequest();
         },
         settingRequestUrl: function(owner, name) {
           return 'https://api.github.com/repos/' + owner + '/' + name;
         },
-        onAjaxError: function(owner, name) {
-          this.error = true;
-          this.ajax.response = {};
+        onAjaxError: function() {
+        this.set('message.error', true);
+        this.set('message.text', 'No matching repository was found :(');
+        // this.set('ajax.response', '');
         },
         onAjaxSucces: function() {
-          debugger;
-          this.error = false;
-          console.log(this.$.ajax);
-          // this.ajax.response = ;
+         this.set('message.error', true);
+         this.set('message.text', 'A Repository match was found! :)');
+        },
+        setStatus: function(flag) {
+
+        var status = {}  
+        if(flag) {
+          status = {
+            error: false,
+            message: '',
+          }
+        }
+        else {
+
+        }
+
+         this.set('status', status);
         }
       };
 
       Polymer({
         is: 'ym-github-repo',
-        ready: Api.onEnter,
         properties: {
           owner: {
             type: String,
@@ -141,9 +159,12 @@
             type: String,
             value: 'AngularJS-UI-Router-Demo'
           },
-          error: {
-            type: Boolean,
-            value: false
+          message: {
+            type: Object,
+            value: {
+              error: false,
+              text: '',
+            }
           },
           url: {
             type: String,
@@ -156,10 +177,10 @@
             }
           }
         },
-        settingRequestUrl: Api.settingRequestUrl,
-        gettingRepositoryInfo: Api.gettingRepositoryInfo,
-        onAjaxError: Api.onAjaxSucces,
-        onAjaxResponse: Api.onAjaxSucces
+        settingRequestUrl: api.settingRequestUrl,
+        gettingRepositoryInfo: api.gettingRepositoryInfo,
+        onAjaxError: api.onAjaxError,
+        onAjaxResponse: api.onAjaxSucces
       });
     })();
   </script>
