@@ -65,7 +65,7 @@
       <paper-input label="Owner" class="paper-font-body2" value="{{owner}}"></paper-input>
       <paper-input label="Name" class="paper-font-body2" value="{{name}}"></paper-input>
       <!-- Search button -->
-      <p><paper-button gray-ripple on-click="getInfo">get repository info</paper-button></p>
+      <p><paper-button gray-ripple on-click="gettingRepositoryInfo">get repository info</paper-button></p>
 
       <paper-fab mini icon="favorite"></paper-fab>
 
@@ -79,12 +79,13 @@
          id="ajax"
          url="{{url}}"
          handle-as="json"
-         on-response="onResponse"
-         on-error="onError"
+         on-error="onAjaxError"
+         on-response="onAjaxResponse"
          last-response="{{ajax.response}}">
        </iron-ajax>
+      <h2><span>{{ error }}</span></h2>
 
-      <section class="info-wrapper">
+      <section class="info-wrapper" hidden$="{{error}}">
           <!-- Repo info -->
           <ul class="info">
             <li>
@@ -106,18 +107,31 @@
   <script>
     (function() {
 
-    var getInfo = function(){
-      this.$.ajax.generateRequest();
-    };
-
-    var getUrl = function(owner, name) {
-      return 'https://api.github.com/repos/' + owner + '/' + name;
-    };
-
-
+      var Api = {
+        onEnter: function() {
+            this.showResults = false;
+        },
+        gettingRepositoryInfo: function() {
+          this.$.ajax.generateRequest();
+        },
+        settingRequestUrl: function(owner, name) {
+          return 'https://api.github.com/repos/' + owner + '/' + name;
+        },
+        onAjaxError: function(owner, name) {
+          this.error = true;
+          this.ajax.response = {};
+        },
+        onAjaxSucces: function() {
+          debugger;
+          this.error = false;
+          console.log(this.$.ajax);
+          // this.ajax.response = ;
+        }
+      };
 
       Polymer({
         is: 'ym-github-repo',
+        ready: Api.onEnter,
         properties: {
           owner: {
             type: String,
@@ -127,9 +141,13 @@
             type: String,
             value: 'AngularJS-UI-Router-Demo'
           },
+          error: {
+            type: Boolean,
+            value: false
+          },
           url: {
             type: String,
-            computed: 'getUrl(owner, name)'
+            computed: 'settingRequestUrl(owner, name)'
           },
           ajax: {
             type: Object,
@@ -138,18 +156,10 @@
             }
           }
         },
-        getUrl: getUrl,
-        getInfo: getInfo,
-        onResponse: function(data, b) {
-         console.log('From on-response', data);
-         console.log('From on-response', b);
-         console.log('From on-response', this.$);
-        },
-        onError: function(data, b) {
-         console.log('From on-error', data);
-          console.log('From on-response', b);
-          console.log('From on-response', data);
-        }
+        settingRequestUrl: Api.settingRequestUrl,
+        gettingRepositoryInfo: Api.gettingRepositoryInfo,
+        onAjaxError: Api.onAjaxSucces,
+        onAjaxResponse: Api.onAjaxSucces
       });
     })();
   </script>
