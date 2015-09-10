@@ -77,9 +77,7 @@
       <div class="paper-font-code1 url">{{url}}</div>
 
       <div class="paper-font-title">Status:</div>
-      <div class="paper-font-code1">
-        <span class="{{ {error: message.error, success: !message.error } | tokenList }}">{{message.text}}</span>
-      </div>
+      <div> <span hidden$="{{!message.text}}" class$="{{message.class}}">{{message.text}}</span></div>
         
 
       <!-- Ajax call to Github API -->
@@ -91,7 +89,7 @@
          on-response="onAjaxResponse"
          last-response="{{ajax.response}}">
        </iron-ajax>
-      <section class="info-wrapper" hidden$="{{error}}">
+      <section class="info-wrapper">
           <!-- Ajax response data render to markup -->
           <ul class="info">
             <li>
@@ -123,29 +121,11 @@
           return 'https://api.github.com/repos/' + owner + '/' + name;
         },
         onAjaxError: function() {
-        this.set('message.error', true);
-        this.set('message.text', 'No matching repository was found :(');
-        // this.set('ajax.response', '');
+        this.set('message', { class: 'error', text: 'No matching repository was found :('} );
         },
         onAjaxSucces: function() {
-         this.set('message.error', true);
-         this.set('message.text', 'A Repository match was found! :)');
+         this.set('message', { class: 'success', text: 'A Repository match was found! :)'} );
         },
-        setStatus: function(flag) {
-
-        var status = {}  
-        if(flag) {
-          status = {
-            error: false,
-            message: '',
-          }
-        }
-        else {
-
-        }
-
-         this.set('status', status);
-        }
       };
 
       Polymer({
@@ -162,8 +142,8 @@
           message: {
             type: Object,
             value: {
-              error: false,
               text: '',
+              class: ''
             }
           },
           url: {
