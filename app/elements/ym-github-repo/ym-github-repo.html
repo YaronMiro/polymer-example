@@ -65,7 +65,7 @@
       <paper-input label="Owner" class="paper-font-body2" value="{{owner}}"></paper-input>
       <paper-input label="Name" class="paper-font-body2" value="{{name}}"></paper-input>
       <!-- Search button -->
-      <p><paper-button gray-ripple>get repository info</paper-button></p>
+      <p><paper-button gray-ripple on-click="getInfo">get repository info</paper-button></p>
 
       <paper-fab mini icon="favorite"></paper-fab>
 
@@ -75,13 +75,14 @@
       </div>
       <!-- Ajax call to Github API -->
       <!-- https://api.github.com/repos/YaronMiro/AngularJS-UI-Router-Demo -->
-      <iron-ajax auto
-                 id="ajax"
-                 url="{{url}}"
-                 handle-as="json"
-                 on-response="onResponse"
-                 on-error="onError"
-                 last-response="{{ajax.response}}"></iron-ajax>
+      <iron-ajax
+         id="ajax"
+         url="{{url}}"
+         handle-as="json"
+         on-response="onResponse"
+         on-error="onError"
+         last-response="{{ajax.response}}">
+       </iron-ajax>
 
       <section class="info-wrapper">
           <!-- Repo info -->
@@ -105,6 +106,16 @@
   <script>
     (function() {
 
+    var getInfo = function(){
+      this.$.ajax.generateRequest();
+    };
+
+    var getUrl = function(owner, name) {
+      return 'https://api.github.com/repos/' + owner + '/' + name;
+    };
+
+
+
       Polymer({
         is: 'ym-github-repo',
         properties: {
@@ -127,9 +138,8 @@
             }
           }
         },
-        getUrl: function(owner, name) {
-          return 'https://api.github.com/repos/' + owner + '/' + name;
-        },
+        getUrl: getUrl,
+        getInfo: getInfo,
         onResponse: function(data, b) {
          console.log('From on-response', data);
          console.log('From on-response', b);
