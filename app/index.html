@@ -15,9 +15,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta charset="utf-8">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="generator" content="Polymer Starter Kit" />
-  <title>Polymer Starter Kit</title>
+  <meta name="generator" content="Polymer 1.0 demo" />
+  <title>Polymer 1.0 custom elements demo</title>
   <!-- Place favicon.ico in the `app/` directory -->
+
+  <!--Google fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Play:400,700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Abril+Fatface' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
   <!-- Chrome for Android theme color -->
   <meta name="theme-color" content="#303F9F">
@@ -59,7 +64,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <body unresolved class="fullbleed layout vertical">
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
-      <section class="demo">
+
+      <div class="container">
+        <div class="box-wrapper">
+          <div class="box">
+            <div class="box-content">
+              <div>Demo 1</div>
+              <div><i class="fa fa-github"></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="box-wrapper">
+          <div class="box">
+            <div class="box-content">
+              <div>Demo 2</div>
+              <div><i class="fa fa-github"></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="box-wrapper">
+          <div class="box">
+            <div class="box-content">
+              <div>Demo 3</div>
+              <div><i class="fa fa-github"></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="box-wrapper">
+          <div class="box">
+            <div class="box-content">
+              <div>Demo 4</div>
+              <div><i class="fa fa-github"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="demo" hidden>
         <h3 class="paper-font-title">Demo 1 - Github public repositories info</h3>
         <section class="paper-font-body1">
         Including this <span class="paper-font-code1"> &lt;ym-github-repo&gt;&lt;/ym-github-repo&gt;</span> will render the the github repository block.

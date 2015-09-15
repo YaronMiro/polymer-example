@@ -12,3 +12,29 @@ body {
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #333;
 }
+
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.container .box-wrapper {
+  text-align: center;
+  height: 50px;
+  width: 50%;
+  float: left;
+}
+
+.container .box-wrapper .box {
+  padding: 8px;
+}
+
+.container .box-wrapper .box:nth-child(odd) {
+  padding-right: 0px;
+  padding-bottom: 0px;
+}
+
+.container .box-wrapper .box .box-content {
+  background: gray;
+}
