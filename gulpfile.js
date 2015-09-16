@@ -21,6 +21,7 @@ var path = require('path');
 var fs = require('fs');
 var glob = require('glob');
 var historyApiFallback = require('connect-history-api-fallback');
+var sass = require('gulp-sass');
 
 // Deploy to gh-pages
 var deploy = require('gulp-gh-pages');
@@ -36,6 +37,12 @@ var AUTOPREFIXER_BROWSERS = [
   'android >= 4.4',
   'bb >= 10'
 ];
+
+gulp.task('sassTask', function() {
+  gulp.src('app/sass/**/*.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('app/styles/'));
+});
 
 var styleTask = function (stylesPath, srcs) {
   return gulp.src(srcs.map(function(src) {
@@ -181,7 +188,7 @@ gulp.task('precache', function (callback) {
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
 // Watch Files For Changes & Reload
-gulp.task('serve', ['styles', 'elements', 'images'], function () {
+gulp.task('serve', ['styles', 'elements', 'images', 'sassTask'], function () {
   browserSync({
     notify: false,
     logPrefix: 'PSK',
@@ -207,6 +214,7 @@ gulp.task('serve', ['styles', 'elements', 'images'], function () {
   });
 
   gulp.watch(['app/**/*.html'], reload);
+  gulp.watch(['app/sass/**/*.scss'],['sassTask']);
   gulp.watch(['app/styles/**/*.css'], ['styles', reload]);
   gulp.watch(['app/elements/**/*.css'], ['elements', reload]);
   gulp.watch(['app/{scripts,elements}/**/*.js'], ['jshint']);
