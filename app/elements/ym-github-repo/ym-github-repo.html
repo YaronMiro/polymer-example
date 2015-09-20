@@ -14,7 +14,9 @@
       padding: 0px;
     }
 
-    .success, .error {
+    .success,
+    .error,
+    paper-button {
       color: white;
     }
 
@@ -53,6 +55,7 @@
 
     paper-button {
       margin: 0px;
+      background-color: #0072D4;
     }
 
     paper-button::shadow paper-ripple {
@@ -110,12 +113,7 @@
 
   <script>
     (function() {
-
-<<<<<<< HEAD
-      var api = {
-=======
       var ajaxService = {
->>>>>>> 7d3ad419236f9deb9bae956d17d152851087d988
         gettingRepositoryInfo: function() {
           this.$.ajax.generateRequest();
         },

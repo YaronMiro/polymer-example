@@ -23,6 +23,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   // See https://github.com/Polymer/polymer/issues/1381
   window.addEventListener('WebComponentsReady', function() {
+
+    // selected is an index by default.
+    var pages = document.querySelector('iron-pages');
+    pages.selected = 0;
+
+    var pages = document.querySelector('paper-tabs');
+    pages.selected = 0; 
+
+
     // imports are loaded and elements have been registered
   });
 
