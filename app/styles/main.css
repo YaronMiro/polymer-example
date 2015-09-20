@@ -1,18 +1,10 @@
 body {
-  background: #fafafa;
+  background: #D1DFE8;
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #333; }
 
 .container {
+  text-align: center;
   width: 90%;
   margin: 0 auto;
-  background: red; }
-  .container .box-wrapper {
-    text-align: center;
-    height: auto;
-    width: 50%;
-    float: left; }
-    .container .box-wrapper .box {
-      margin: 10px; }
-      .container .box-wrapper .box .box-content {
-        background: gray; }
+  background: white; }

@@ -64,56 +64,55 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <body unresolved class="fullbleed layout vertical">
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
+  <div class="container">
 
-      <div class="container">
-        <div class="box-wrapper">
-          <div class="box">
-            <div class="box-content">
-              <div>Demo 1</div>
-              <div><i class="fa fa-github"></i></div>
-            </div>
-          </div>
-        </div>
-        <div class="box-wrapper">
-          <div class="box">
-            <div class="box-content">
-              <div>Demo 2</div>
-              <div><i class="fa fa-github"></i></div>
-            </div>
-          </div>
-        </div>
-        <div class="box-wrapper">
-          <div class="box">
-            <div class="box-content">
-              <div>Demo 3</div>
-              <div><i class="fa fa-github"></i></div>
-            </div>
-          </div>
-        </div>
-        <div class="box-wrapper">
-          <div class="box">
-            <div class="box-content">
-              <div>Demo 4</div>
-              <div><i class="fa fa-github"></i></div>
-            </div>
-          </div>
-        </div>
+    <paper-tabs selected="{{selected}}">
+      <paper-tab>Tab 1</paper-tab>
+      <paper-tab>Tab 2</paper-tab>
+      <paper-tab>Tab 3</paper-tab>
+    </paper-tabs>
+    <h2>Current Tab: <span>[[selected]]</span></h2>
+
+    <iron-pages selected="[[selected]]">
+      <div>Page 1</div>
+      <div>Page 2</div>
+      <div>Page 3</div>
+    </iron-pages>
+
+
+    <header class="horizontal layout">
+      <div class="flex">
+        <div>Demo 1</div>
+        <div><i class="fa fa-github"></i></div>
       </div>
-
-      <section class="demo" hidden>
-        <h3 class="paper-font-title">Demo 1 - Github public repositories info</h3>
-        <section class="paper-font-body1">
-        Including this <span class="paper-font-code1"> &lt;ym-github-repo&gt;&lt;/ym-github-repo&gt;</span> will render the the github repository block.
-        </section>
-        <div class="paper-font-title">Github repository block</div>
-        <div class="paper-font-body1">Fill the fields to get an info about the repository (only for public repositories).</div>
-        <ym-github-repo></ym-github-repo>
-      </section>
+      <div class="flex">
+        <div>Demo 2</div>
+        <div><i class="fa fa-github"></i></div>
+      </div>
+      <div class="flex">
+        <div>Demo 3</div>
+        <div><i class="fa fa-github"></i></div>
+      </div>
+    </header>
+    <footer class="horizontal layout">
+      <a class="flex" href="http://www.gizra.com/" target="_blank">gizra</a>
+      <a class="flex" href="https://github.com/YaronMiro" target="_blank">Yaron Miro</a>
+      <a class="flex" href="https://github.com/YaronMiro/polymer-example" target="_blank" Get the code</a>
+    </footer>
+  </div>
+  <section class="demo" hidden>
+    <h3 class="paper-font-title">Demo 1 - Github public repositories info</h3>
+    <section class="paper-font-body1">
+    Including this <span class="paper-font-code1"> &lt;ym-github-repo&gt;&lt;/ym-github-repo&gt;</span> will render the the github repository block.
+    </section>
+    <div class="paper-font-title">Github repository block</div>
+    <div class="paper-font-body1">Fill the fields to get an info about the repository (only for public repositories).</div>
+    <ym-github-repo></ym-github-repo>
+  </section>
   </template>
 
   <!-- build:js scripts/app.js -->
   <script src="scripts/app.js"></script>
   <!-- endbuild-->
 </body>
-
 </html>

@@ -1,34 +1,16 @@
 body {
-  background: #fafafa;
+  background: #D1DFE8;
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #333;
 }
 
 .container {
+  text-align: center;
   width: 90%;
   margin: 0 auto;
-  background: red;
+  background: white;
 //  padding: 10px;
 
 
 
-  .box-wrapper {
-    text-align: center;
-    height: auto;
-    width: 50%;
-    float: left;
-
-    .box {
-      margin: 10px;
-
-      &:nth-child(odd) {
-//        padding-right: 0px;
-//        padding-bottom: 0px;
-      }
-
-      .box-content {
-        background: gray;
-      }
-    }
-  }
 }
