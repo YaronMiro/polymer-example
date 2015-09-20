@@ -66,14 +66,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template is="dom-bind" id="app">
   <div class="container">
 
-    <paper-tabs selected="{{selected}}">
+    <paper-tabs selected="{{selectedTab}}">
       <paper-tab>Tab 1</paper-tab>
       <paper-tab>Tab 2</paper-tab>
       <paper-tab>Tab 3</paper-tab>
     </paper-tabs>
-    <h2>Current Tab: <span>[[selected]]</span></h2>
+    <h2>Current Tab: <span>[[selectedTab]]</span></h2>
 
-    <iron-pages selected="[[selected]]">
+    <iron-pages selected="[[selectedTab]]">
       <div>Page 1</div>
       <div>Page 2</div>
       <div>Page 3</div>
