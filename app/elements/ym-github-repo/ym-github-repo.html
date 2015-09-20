@@ -111,7 +111,11 @@
   <script>
     (function() {
 
+<<<<<<< HEAD
       var api = {
+=======
+      var ajaxService = {
+>>>>>>> 7d3ad419236f9deb9bae956d17d152851087d988
         gettingRepositoryInfo: function() {
           this.$.ajax.generateRequest();
         },
@@ -123,7 +127,7 @@
         },
         onAjaxSucces: function() {
          this.set('message', { class: 'success', status: true,  text: 'A Repository match was found! :)'} );
-        },
+        }
       };
 
       Polymer({
@@ -152,14 +156,14 @@
           ajax: {
             type: Object,
             value: {
-              response: {},
+              response: {}
             }
           }
         },
-        settingRequestUrl: api.settingRequestUrl,
-        gettingRepositoryInfo: api.gettingRepositoryInfo,
-        onAjaxError: api.onAjaxError,
-        onAjaxResponse: api.onAjaxSucces
+        settingRequestUrl: ajaxService.settingRequestUrl,
+        gettingRepositoryInfo: ajaxService.gettingRepositoryInfo,
+        onAjaxError: ajaxService.onAjaxError,
+        onAjaxResponse: ajaxService.onAjaxSucces
       });
     })();
   </script>
