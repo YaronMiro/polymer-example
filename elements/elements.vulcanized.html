@@ -11609,61 +11609,6 @@ is separate from validation, and `allowed-pattern` does not affect how the input
 </script>
 
 
-
-
-<script>
-
-  Polymer({
-
-    is: 'iron-media-query',
-
-    properties: {
-
-      /**
-       * The Boolean return value of the media query.
-       */
-      queryMatches: {
-        type: Boolean,
-        value: false,
-        readOnly: true,
-        notify: true
-      },
-
-      /**
-       * The CSS media query to evaluate.
-       */
-      query: {
-        type: String,
-        observer: 'queryChanged'
-      }
-
-    },
-
-    created: function() {
-      this._mqHandler = this.queryHandler.bind(this);
-    },
-
-    queryChanged: function(query) {
-      if (this._mq) {
-        this._mq.removeListener(this._mqHandler);
-      }
-      if (query[0] !== '(') {
-        query = '(' + query + ')';
-      }
-      this._mq = window.matchMedia(query);
-      this._mq.addListener(this._mqHandler);
-      this.queryHandler(this._mq);
-    },
-
-    queryHandler: function(mq) {
-      this._setQueryMatches(mq.matches);
-    }
-
-  });
-
-</script>
-
-
 <script>
 
   /**
@@ -11699,6 +11644,194 @@ is separate from validation, and `allowed-pattern` does not affect how the input
 
 
 
+
+<style>
+
+.paper-font-display4,
+.paper-font-display3,
+.paper-font-display2,
+.paper-font-display1,
+.paper-font-headline,
+.paper-font-title,
+.paper-font-subhead,
+.paper-font-body2,
+.paper-font-body1,
+.paper-font-caption,
+.paper-font-menu,
+.paper-font-button {
+  font-family: 'Roboto', 'Noto', sans-serif;
+  -webkit-font-smoothing: antialiased;  /* OS X subpixel AA bleed bug */
+}
+
+.paper-font-code2,
+.paper-font-code1 {
+  font-family: 'Roboto Mono', 'Consolas', 'Menlo', monospace;
+  -webkit-font-smoothing: antialiased;  /* OS X subpixel AA bleed bug */
+}
+
+/* Opt for better kerning for headers & other short labels. */
+.paper-font-display4,
+.paper-font-display3,
+.paper-font-display2,
+.paper-font-display1,
+.paper-font-headline,
+.paper-font-title,
+.paper-font-subhead,
+.paper-font-menu,
+.paper-font-button {
+  text-rendering: optimizeLegibility;
+}
+
+/*
+"Line wrapping only applies to Body, Subhead, Headline, and the smaller Display
+styles. All other styles should exist as single lines."
+*/
+.paper-font-display4,
+.paper-font-display3,
+.paper-font-title,
+.paper-font-caption,
+.paper-font-menu,
+.paper-font-button {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.paper-font-display4 {
+  font-size: 112px;
+  font-weight: 300;
+  letter-spacing: -.044em;
+  line-height: 120px;
+}
+
+.paper-font-display3 {
+  font-size: 56px;
+  font-weight: 400;
+  letter-spacing: -.026em;
+  line-height: 60px;
+}
+
+.paper-font-display2 {
+  font-size: 45px;
+  font-weight: 400;
+  letter-spacing: -.018em;
+  line-height: 48px;
+}
+
+.paper-font-display1 {
+  font-size: 34px;
+  font-weight: 400;
+  letter-spacing: -.01em;
+  line-height: 40px;
+}
+
+.paper-font-headline {
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: -.012em;
+  line-height: 32px;
+}
+
+.paper-font-title {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
+}
+
+.paper-font-subhead {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.paper-font-body2 {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.paper-font-body1 {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.paper-font-caption {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.011em;
+  line-height: 20px;
+}
+
+.paper-font-menu {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.paper-font-button {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.018em;
+  line-height: 24px;
+  text-transform: uppercase;
+}
+
+.paper-font-code2 {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+}
+
+.paper-font-code1 {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+}
+
+</style>
+<style>
+.shadow-transition {
+  transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.shadow-elevation-2dp {
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+              0 1px 5px 0 rgba(0, 0, 0, 0.12),
+              0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+.shadow-elevation-3dp {
+  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.14),
+              0 1px 8px 0 rgba(0, 0, 0, 0.12),
+              0 3px 3px -2px rgba(0, 0, 0, 0.4);
+}
+
+.shadow-elevation-4dp {
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14),
+              0 1px 10px 0 rgba(0, 0, 0, 0.12),
+              0 2px 4px -1px rgba(0, 0, 0, 0.4);
+}
+
+.shadow-elevation-6dp {
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14),
+              0 1px 18px 0 rgba(0, 0, 0, 0.12),
+              0 3px 5px -1px rgba(0, 0, 0, 0.4);
+}
+
+.shadow-elevation-8dp {
+  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12),
+              0 5px 5px -3px rgba(0, 0, 0, 0.4);
+}
+
+.shadow-elevation-16dp {
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
+              0  6px 30px 5px rgba(0, 0, 0, 0.12),
+              0  8px 10px -5px rgba(0, 0, 0, 0.4);
+}
+
+</style>
 <script>
 
   /**
@@ -11895,199 +12028,58 @@ is separate from validation, and `allowed-pattern` does not affect how the input
   ];
 
 </script>
+<script>
 
+  /**
+   * `Polymer.IronMenubarBehavior` implements accessible menubar behavior.
+   *
+   * @polymerBehavior Polymer.IronMenubarBehavior
+   */
+  Polymer.IronMenubarBehaviorImpl = {
 
+    hostAttributes: {
+      'role': 'menubar'
+    },
 
+    keyBindings: {
+      'left': '_onLeftKey',
+      'right': '_onRightKey'
+    },
 
+    _onUpKey: function(event) {
+      this._activateFocused(event.detail.keyboardEvent);
+    },
 
-<style>
+    _onDownKey: function(event) {
+      this._activateFocused(event.detail.keyboardEvent);
+    },
 
-.paper-font-display4,
-.paper-font-display3,
-.paper-font-display2,
-.paper-font-display1,
-.paper-font-headline,
-.paper-font-title,
-.paper-font-subhead,
-.paper-font-body2,
-.paper-font-body1,
-.paper-font-caption,
-.paper-font-menu,
-.paper-font-button {
-  font-family: 'Roboto', 'Noto', sans-serif;
-  -webkit-font-smoothing: antialiased;  /* OS X subpixel AA bleed bug */
-}
+    _onLeftKey: function() {
+      this._focusPrevious();
+    },
 
-.paper-font-code2,
-.paper-font-code1 {
-  font-family: 'Roboto Mono', 'Consolas', 'Menlo', monospace;
-  -webkit-font-smoothing: antialiased;  /* OS X subpixel AA bleed bug */
-}
+    _onRightKey: function() {
+      this._focusNext();
+    },
 
-/* Opt for better kerning for headers & other short labels. */
-.paper-font-display4,
-.paper-font-display3,
-.paper-font-display2,
-.paper-font-display1,
-.paper-font-headline,
-.paper-font-title,
-.paper-font-subhead,
-.paper-font-menu,
-.paper-font-button {
-  text-rendering: optimizeLegibility;
-}
+    _onKeydown: function(event) {
+      if (this.keyboardEventMatchesKeys(event, 'up down left right esc enter')) {
+        return;
+      }
 
-/*
-"Line wrapping only applies to Body, Subhead, Headline, and the smaller Display
-styles. All other styles should exist as single lines."
-*/
-.paper-font-display4,
-.paper-font-display3,
-.paper-font-title,
-.paper-font-caption,
-.paper-font-menu,
-.paper-font-button {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+      // all other keys focus the menu item starting with that character
+      this._focusWithKeyboardEvent(event);
+    }
 
-.paper-font-display4 {
-  font-size: 112px;
-  font-weight: 300;
-  letter-spacing: -.044em;
-  line-height: 120px;
-}
+  };
 
-.paper-font-display3 {
-  font-size: 56px;
-  font-weight: 400;
-  letter-spacing: -.026em;
-  line-height: 60px;
-}
+  /** @polymerBehavior Polymer.IronMenubarBehavior */
+  Polymer.IronMenubarBehavior = [
+    Polymer.IronMenuBehavior,
+    Polymer.IronMenubarBehaviorImpl
+  ];
 
-.paper-font-display2 {
-  font-size: 45px;
-  font-weight: 400;
-  letter-spacing: -.018em;
-  line-height: 48px;
-}
-
-.paper-font-display1 {
-  font-size: 34px;
-  font-weight: 400;
-  letter-spacing: -.01em;
-  line-height: 40px;
-}
-
-.paper-font-headline {
-  font-size: 24px;
-  font-weight: 400;
-  letter-spacing: -.012em;
-  line-height: 32px;
-}
-
-.paper-font-title {
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 28px;
-}
-
-.paper-font-subhead {
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-}
-
-.paper-font-body2 {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 24px;
-}
-
-.paper-font-body1 {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
-}
-
-.paper-font-caption {
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: 0.011em;
-  line-height: 20px;
-}
-
-.paper-font-menu {
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 24px;
-}
-
-.paper-font-button {
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0.018em;
-  line-height: 24px;
-  text-transform: uppercase;
-}
-
-.paper-font-code2 {
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 20px;
-}
-
-.paper-font-code1 {
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 20px;
-}
-
-</style>
-<style>
-.shadow-transition {
-  transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.shadow-elevation-2dp {
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
-              0 1px 5px 0 rgba(0, 0, 0, 0.12),
-              0 3px 1px -2px rgba(0, 0, 0, 0.2);
-}
-
-.shadow-elevation-3dp {
-  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.14),
-              0 1px 8px 0 rgba(0, 0, 0, 0.12),
-              0 3px 3px -2px rgba(0, 0, 0, 0.4);
-}
-
-.shadow-elevation-4dp {
-  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14),
-              0 1px 10px 0 rgba(0, 0, 0, 0.12),
-              0 2px 4px -1px rgba(0, 0, 0, 0.4);
-}
-
-.shadow-elevation-6dp {
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14),
-              0 1px 18px 0 rgba(0, 0, 0, 0.12),
-              0 3px 5px -1px rgba(0, 0, 0, 0.4);
-}
-
-.shadow-elevation-8dp {
-  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
-              0 3px 14px 2px rgba(0, 0, 0, 0.12),
-              0 5px 5px -3px rgba(0, 0, 0, 0.4);
-}
-
-.shadow-elevation-16dp {
-  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
-              0  6px 30px 5px rgba(0, 0, 0, 0.12),
-              0  8px 10px -5px rgba(0, 0, 0, 0.4);
-}
-
-</style>
-
+</script>
 
 
 
@@ -13016,40 +13008,6 @@ module.exports = Array.isArray || function (arr) {
 },{}]},{},[1])(1)
 });</script>
 
-
-
-
-
-
-<script>
-  window.addEventListener('WebComponentsReady', function() {
-
-    // We use Page.js for routing. This is a Micro
-    // client-side router inspired by the Express router
-    // More info: https://visionmedia.github.io/page.js/
-    page('/', function () {
-      app.route = 'home';
-    });
-
-    page('/demo-1', function () {
-      app.route = 'demo-1';
-    });
-
-    page('/demo-2', function () {
-      app.route = 'demo-2';
-
-
-    });page('/demo-3', function () {
-      app.route = 'demo-3';
-    });
-
-    // add #! before urls
-    page({
-      hashbang: true
-    });
-
-  });
-</script>
 
 </head><body><div hidden="" by-vulcanize=""><dom-module id="iron-icon" assetpath="../bower_components/iron-icon/">
 
@@ -15285,639 +15243,6 @@ module.exports = Array.isArray || function (arr) {
   });
 
 </script>
-<dom-module id="paper-drawer-panel" assetpath="../bower_components/paper-drawer-panel/">
-  <style>
-/**
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
-*/
-
-:host {
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-iron-selector > #drawer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  background-color: white;
-
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-
-  @apply(--paper-drawer-panel-drawer-container);
-}
-
-.transition > #drawer {
-  transition: -webkit-transform ease-in-out 0.3s, width ease-in-out 0.3s, visibility 0.3s;
-  transition: transform ease-in-out 0.3s, width ease-in-out 0.3s, visibility 0.3s;
-}
-
-.left-drawer > #drawer {
-  @apply(--paper-drawer-panel-left-drawer-container);
-}
-
-.right-drawer > #drawer {
-  left: auto;
-  right: 0;
-
-  @apply(--paper-drawer-panel-right-drawer-container);
-}
-
-iron-selector > #main {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-
-  @apply(--paper-drawer-panel-main-container);
-}
-
-.transition > #main {
-  transition: left ease-in-out 0.3s, padding ease-in-out 0.3s;
-}
-
-.right-drawer > #main {
-  left: 0;
-}
-
-.right-drawer.transition > #main {
-  transition: right ease-in-out 0.3s, padding ease-in-out 0.3s;
-}
-
-#main > ::content > [main] {
-  height: 100%;
-}
-
-#drawer > ::content > [drawer] {
-  height: 100%;
-}
-
-#scrim {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity ease-in-out 0.38s, visibility ease-in-out 0.38s;
-  background-color: rgba(0, 0, 0, 0.3);
-}
-
-.narrow-layout > #drawer {
-  will-change: transform;
-}
-
-.narrow-layout > #drawer.iron-selected {
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
-}
-
-.right-drawer.narrow-layout > #drawer.iron-selected {
-  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.15);
-}
-
-.narrow-layout > #drawer > ::content > [drawer] {
-  border: 0;
-}
-
-.left-drawer.narrow-layout > #drawer:not(.iron-selected) {
-  -webkit-transform: translateX(-100%);
-  transform: translateX(-100%);
-}
-
-.right-drawer.narrow-layout > #drawer:not(.iron-selected) {
-  left: auto;
-  visibility: hidden;
-
-  -webkit-transform: translateX(100%);
-  transform: translateX(100%);
-}
-
-.right-drawer.narrow-layout.dragging > #drawer:not(.iron-selected),
-.right-drawer.narrow-layout.peeking > #drawer:not(.iron-selected) {
-  visibility: visible;
-}
-
-.narrow-layout > #main {
-  padding: 0;
-}
-
-.right-drawer.narrow-layout > #main {
-  left: 0;
-  right: 0;
-}
-
-.narrow-layout > #main:not(.iron-selected) > #scrim,
-.dragging > #main > #scrim {
-  visibility: visible;
-  opacity: var(--paper-drawer-panel-scrim-opacity, 1);
-}
-
-.narrow-layout > #main > * {
-  margin: 0;
-  min-height: 100%;
-  left: 0;
-  right: 0;
-
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-iron-selector:not(.narrow-layout) #main ::content [paper-drawer-toggle] {
-  display: none;
-}
-</style>
-
-  <template>
-    <iron-media-query id="mq" on-query-matches-changed="_onQueryMatchesChanged" query="[[_computeMediaQuery(forceNarrow, responsiveWidth)]]">
-    </iron-media-query>
-
-    <iron-selector attr-for-selected="id" class$="[[_computeIronSelectorClass(narrow, transition, dragging, rightDrawer, peeking)]]" activate-event="" selected="[[selected]]">
-
-      <div id="main" style$="[[_computeMainStyle(narrow, rightDrawer, drawerWidth)]]">
-        <content select="[main]"></content>
-        <div id="scrim" on-tap="closeDrawer"></div>
-      </div>
-
-      <div id="drawer" style$="[[_computeDrawerStyle(drawerWidth)]]">
-        <content select="[drawer]"></content>
-      </div>
-
-    </iron-selector>
-  </template>
-
-</dom-module>
-
-<script>
-
-  (function() {
-
-    'use strict';
-
-   // this would be the only `paper-drawer-panel` in
-   // the whole app that can be in `dragging` state
-    var sharedPanel = null;
-
-    function classNames(obj) {
-      var classes = [];
-      for (var key in obj) {
-        if (obj.hasOwnProperty(key) && obj[key]) {
-          classes.push(key);
-        }
-      }
-
-      return classes.join(' ');
-    }
-
-    Polymer({
-
-      is: 'paper-drawer-panel',
-
-      /**
-       * Fired when the narrow layout changes.
-       *
-       * @event paper-responsive-change {{narrow: boolean}} detail -
-       *     narrow: true if the panel is in narrow layout.
-       */
-
-      /**
-       * Fired when the a panel is selected.
-       *
-       * Listening for this event is an alternative to observing changes in the `selected` attribute.
-       * This event is fired both when a panel is selected.
-       *
-       * @event iron-select {{item: Object}} detail -
-       *     item: The panel that the event refers to.
-       */
-
-      /**
-       * Fired when a panel is deselected.
-       *
-       * Listening for this event is an alternative to observing changes in the `selected` attribute.
-       * This event is fired both when a panel is deselected.
-       *
-       * @event iron-deselect {{item: Object}} detail -
-       *     item: The panel that the event refers to.
-       */
-      properties: {
-
-        /**
-         * The panel to be selected when `paper-drawer-panel` changes to narrow
-         * layout.
-         */
-        defaultSelected: {
-          type: String,
-          value: 'main'
-        },
-
-        /**
-         * If true, swipe from the edge is disable.
-         */
-        disableEdgeSwipe: {
-          type: Boolean,
-          value: false
-        },
-
-        /**
-         * If true, swipe to open/close the drawer is disabled.
-         */
-        disableSwipe: {
-          type: Boolean,
-          value: false
-        },
-
-        /**
-         * Whether the user is dragging the drawer interactively.
-         */
-        dragging: {
-          type: Boolean,
-          value: false,
-          readOnly: true,
-          notify: true
-        },
-
-        /**
-         * Width of the drawer panel.
-         */
-        drawerWidth: {
-          type: String,
-          value: '256px'
-        },
-
-        /**
-         * How many pixels on the side of the screen are sensitive to edge
-         * swipes and peek.
-         */
-        edgeSwipeSensitivity: {
-          type: Number,
-          value: 30
-        },
-
-        /**
-         * If true, ignore `responsiveWidth` setting and force the narrow layout.
-         */
-        forceNarrow: {
-          type: Boolean,
-          value: false
-        },
-
-        /**
-         * Whether the browser has support for the transform CSS property.
-         */
-        hasTransform: {
-          type: Boolean,
-          value: function() {
-            return 'transform' in this.style;
-          }
-        },
-
-        /**
-         * Whether the browser has support for the will-change CSS property.
-         */
-        hasWillChange: {
-          type: Boolean,
-          value: function() {
-            return 'willChange' in this.style;
-          }
-        },
-
-        /**
-         * Returns true if the panel is in narrow layout.  This is useful if you
-         * need to show/hide elements based on the layout.
-         */
-        narrow: {
-          reflectToAttribute: true,
-          type: Boolean,
-          value: false,
-          readOnly: true,
-          notify: true
-        },
-
-        /**
-         * Whether the drawer is peeking out from the edge.
-         */
-        peeking: {
-          type: Boolean,
-          value: false,
-          readOnly: true,
-          notify: true
-        },
-
-        /**
-         * Max-width when the panel changes to narrow layout.
-         */
-        responsiveWidth: {
-          type: String,
-          value: '640px'
-        },
-
-        /**
-         * If true, position the drawer to the right.
-         */
-        rightDrawer: {
-          type: Boolean,
-          value: false
-        },
-
-        /**
-         * The panel that is being selected. `drawer` for the drawer panel and
-         * `main` for the main panel.
-         */
-        selected: {
-          reflectToAttribute: true,
-          notify: true,
-          type: String,
-          value: null
-        },
-
-        /**
-         * The attribute on elements that should toggle the drawer on tap, also elements will
-         * automatically be hidden in wide layout.
-         */
-        drawerToggleAttribute: {
-          type: String,
-          value: 'paper-drawer-toggle'
-        },
-
-        /**
-         * Whether the transition is enabled.
-         */
-        transition: {
-          type: Boolean,
-          value: false
-        },
-
-      },
-
-      listeners: {
-        tap: '_onTap',
-        track: '_onTrack',
-        down: '_downHandler',
-        up: '_upHandler'
-      },
-
-      observers: [
-        '_forceNarrowChanged(forceNarrow, defaultSelected)'
-      ],
-
-      /**
-       * Toggles the panel open and closed.
-       *
-       * @method togglePanel
-       */
-      togglePanel: function() {
-        if (this._isMainSelected()) {
-          this.openDrawer();
-        } else {
-          this.closeDrawer();
-        }
-      },
-
-      /**
-       * Opens the drawer.
-       *
-       * @method openDrawer
-       */
-      openDrawer: function() {
-        this.selected = 'drawer';
-      },
-
-      /**
-       * Closes the drawer.
-       *
-       * @method closeDrawer
-       */
-      closeDrawer: function() {
-        this.selected = 'main';
-      },
-
-      ready: function() {
-        // Avoid transition at the beginning e.g. page loads and enable
-        // transitions only after the element is rendered and ready.
-        this.transition = true;
-      },
-
-      _computeIronSelectorClass: function(narrow, transition, dragging, rightDrawer, peeking) {
-        return classNames({
-          dragging: dragging,
-          'narrow-layout': narrow,
-          'right-drawer': rightDrawer,
-          'left-drawer': !rightDrawer,
-          transition: transition,
-          peeking: peeking
-        });
-      },
-
-      _computeDrawerStyle: function(drawerWidth) {
-        return 'width:' + drawerWidth + ';';
-      },
-
-      _computeMainStyle: function(narrow, rightDrawer, drawerWidth) {
-        var style = '';
-
-        style += 'left:' + ((narrow || rightDrawer) ? '0' : drawerWidth) + ';';
-
-        if (rightDrawer) {
-          style += 'right:' + (narrow ? '' : drawerWidth) + ';';
-        }
-
-        return style;
-      },
-
-      _computeMediaQuery: function(forceNarrow, responsiveWidth) {
-        return forceNarrow ? '' : '(max-width: ' + responsiveWidth + ')';
-      },
-
-      _computeSwipeOverlayHidden: function(narrow, disableEdgeSwipe) {
-        return !narrow || disableEdgeSwipe;
-      },
-
-      _onTrack: function(event) {
-        if (sharedPanel && this !== sharedPanel) {
-          return;
-        }
-        switch (event.detail.state) {
-          case 'start':
-            this._trackStart(event);
-            break;
-          case 'track':
-            this._trackX(event);
-            break;
-          case 'end':
-            this._trackEnd(event);
-            break;
-        }
-
-      },
-
-      _responsiveChange: function(narrow) {
-        this._setNarrow(narrow);
-
-        if (this.narrow) {
-          this.selected = this.defaultSelected;
-        }
-
-        this.setScrollDirection(this._swipeAllowed() ? 'y' : 'all');
-        this.fire('paper-responsive-change', {narrow: this.narrow});
-      },
-
-      _onQueryMatchesChanged: function(event) {
-        this._responsiveChange(event.detail.value);
-      },
-
-      _forceNarrowChanged: function() {
-        // set the narrow mode only if we reached the `responsiveWidth`
-        this._responsiveChange(this.forceNarrow || this.$.mq.queryMatches);
-      },
-
-      _swipeAllowed: function() {
-        return this.narrow && !this.disableSwipe;
-      },
-
-      _isMainSelected: function() {
-        return this.selected === 'main';
-      },
-
-      _startEdgePeek: function() {
-        this.width = this.$.drawer.offsetWidth;
-        this._moveDrawer(this._translateXForDeltaX(this.rightDrawer ?
-            -this.edgeSwipeSensitivity : this.edgeSwipeSensitivity));
-        this._setPeeking(true);
-      },
-
-      _stopEdgePeek: function() {
-        if (this.peeking) {
-          this._setPeeking(false);
-          this._moveDrawer(null);
-        }
-      },
-
-      _downHandler: function(event) {
-        if (!this.dragging && this._isMainSelected() && this._isEdgeTouch(event) && !sharedPanel) {
-          this._startEdgePeek();
-          // cancel selection
-          event.preventDefault();
-          // grab this panel
-          sharedPanel = this;
-        }
-      },
-
-      _upHandler: function() {
-        this._stopEdgePeek();
-        // release the panel
-        sharedPanel = null;
-      },
-
-      _onTap: function(event) {
-        var targetElement = Polymer.dom(event).localTarget;
-        var isTargetToggleElement = targetElement &&
-          this.drawerToggleAttribute &&
-          targetElement.hasAttribute(this.drawerToggleAttribute);
-
-        if (isTargetToggleElement) {
-          this.togglePanel();
-        }
-      },
-
-      _isEdgeTouch: function(event) {
-        var x = event.detail.x;
-
-        return !this.disableEdgeSwipe && this._swipeAllowed() &&
-          (this.rightDrawer ?
-            x >= this.offsetWidth - this.edgeSwipeSensitivity :
-            x <= this.edgeSwipeSensitivity);
-      },
-
-      _trackStart: function(event) {
-        if (this._swipeAllowed()) {
-          sharedPanel = this;
-          this._setDragging(true);
-
-          if (this._isMainSelected()) {
-            this._setDragging(this.peeking || this._isEdgeTouch(event));
-          }
-
-          if (this.dragging) {
-            this.width = this.$.drawer.offsetWidth;
-            this.transition = false;
-          }
-        }
-      },
-
-      _translateXForDeltaX: function(deltaX) {
-        var isMain = this._isMainSelected();
-
-        if (this.rightDrawer) {
-          return Math.max(0, isMain ? this.width + deltaX : deltaX);
-        } else {
-          return Math.min(0, isMain ? deltaX - this.width : deltaX);
-        }
-      },
-
-      _trackX: function(event) {
-        if (this.dragging) {
-          var dx = event.detail.dx;
-
-          if (this.peeking) {
-            if (Math.abs(dx) <= this.edgeSwipeSensitivity) {
-              // Ignore trackx until we move past the edge peek.
-              return;
-            }
-            this._setPeeking(false);
-          }
-
-          this._moveDrawer(this._translateXForDeltaX(dx));
-        }
-      },
-
-      _trackEnd: function(event) {
-        if (this.dragging) {
-          var xDirection = event.detail.dx > 0;
-
-          this._setDragging(false);
-          this.transition = true;
-          sharedPanel = null;
-          this._moveDrawer(null);
-
-          if (this.rightDrawer) {
-            this[xDirection ? 'closeDrawer' : 'openDrawer']();
-          } else {
-            this[xDirection ? 'openDrawer' : 'closeDrawer']();
-          }
-        }
-      },
-
-      _transformForTranslateX: function(translateX) {
-        if (translateX === null) {
-          return '';
-        }
-
-        return this.hasWillChange ? 'translateX(' + translateX + 'px)' :
-            'translate3d(' + translateX + 'px, 0, 0)';
-      },
-
-      _moveDrawer: function(translateX) {
-        this.transform(this._transformForTranslateX(translateX), this.$.drawer);
-      }
-
-    });
-
-  }());
-
-</script>
 <dom-module id="paper-icon-button" assetpath="../bower_components/paper-icon-button/">
   <style>
 
@@ -16064,1137 +15389,534 @@ iron-selector:not(.narrow-layout) #main ::content [paper-drawer-toggle] {
 })();
 
 </script>
-<dom-module id="paper-menu" assetpath="../bower_components/paper-menu/">
-  <style>
-/**
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
-*/
-
-/* need a wrapper element to make this higher specificity than the :host rule in paper-item */
-.selectable-content > ::content > .iron-selected {
-  font-weight: bold;
-
-  @apply(--paper-menu-selected-item);
-}
-
-.selectable-content > ::content > [disabled] {
-  color: var(--paper-menu-disabled-color, --disabled-text-color);
-}
-
-.selectable-content > ::content > *:focus {
-  position: relative;
-  outline: 0;
-
-  @apply(--paper-menu-focused-item);
-}
-
-.selectable-content > ::content > *:focus:after {
-  @apply(--layout-fit);
-  background: currentColor;
-  opacity: var(--dark-divider-opacity);
-  content: '';
-
-  @apply(--paper-menu-focused-item-after);
-}
-
-.selectable-content > ::content > *[colored]:focus:after {
-  opacity: 0.26;
-}
-
-</style>
+<iron-iconset-svg name="paper-tabs" size="24">
+<svg><defs>
+<g id="chevron-left"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></g>
+<g id="chevron-right"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></g>
+</defs></svg>
+</iron-iconset-svg>
+<dom-module id="paper-tab" assetpath="../bower_components/paper-tabs/">
 
   <style>
+
     :host {
-      display: block;
-      padding: 8px 0;
+      @apply(--layout-inline);
+      @apply(--layout-center);
+      @apply(--layout-center-justified);
+      @apply(--layout-flex);
 
-      background: var(--paper-menu-background-color, --primary-background-color);
-      color: var(--paper-menu-color, --primary-text-color);
+      position: relative;
+      padding: 0 12px;
+      overflow: hidden;
+      cursor: pointer;
 
-      @apply(--paper-menu);
+      @apply(--paper-tab);
     }
+
+    :host(:focus) {
+      outline: none;
+    }
+
+    :host([link]) {
+      padding: 0;
+    }
+
+    .tab-content {
+      height: 100%;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      transition: opacity 0.1s cubic-bezier(0.4, 0.0, 1, 1);
+
+      @apply(--paper-tab-content);
+    }
+
+    :host(:not(.iron-selected)) > .tab-content {
+      opacity: 0.8;
+    }
+
+    :host(:focus) .tab-content {
+      opacity: 1;
+      font-weight: 700;
+    }
+
+    #ink {
+      color: var(--paper-tab-ink, --paper-yellow-a100);
+      pointer-events: none;
+    }
+
+    .tab-content > ::content > a {
+      height: 100%;
+      /* flex */
+      -ms-flex: 1 1 0.000000001px;
+      -webkit-flex: 1;
+      flex: 1;
+      -webkit-flex-basis: 0.000000001px;
+      flex-basis: 0.000000001px;
+    }
+
   </style>
+
   <template>
 
-    <div class="selectable-content">
+    <div class="tab-content flex-auto center-center horizontal layout">
       <content></content>
     </div>
 
+    <template is="dom-if" if="[[!noink]]">
+      <paper-ripple id="ink" initial-opacity="0.95" opacity-decay-velocity="0.98"></paper-ripple>
+    </template>
+
   </template>
 
 </dom-module>
 
 <script>
 
-(function() {
-
   Polymer({
 
-    is: 'paper-menu',
+    is: 'paper-tab',
 
     behaviors: [
-      Polymer.IronMenuBehavior
-    ]
-
-  });
-
-})();
-
-</script>
-<dom-module id="paper-scroll-header-panel" assetpath="../bower_components/paper-scroll-header-panel/">
-
-  <style>
-    :host {
-      display: block;
-      position: relative;
-      overflow: hidden;
-    }
-
-    #mainContainer {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-
-      -webkit-overflow-scrolling: touch;
-
-      overflow-x: hidden;
-      overflow-y: auto;
-    }
-
-    #headerContainer {
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-    }
-
-    .bg-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-    }
-
-    #headerBg {
-      @apply(--paper-scroll-header-panel-full-header);
-    }
-
-    #condensedHeaderBg {
-      @apply(--paper-scroll-header-panel-condensed-header);
-    }
-
-    #headerBg, #condensedHeaderBg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center center;
-    }
-
-    #condensedHeaderBg {
-      opacity: 0;
-    }
-  </style>
-  <template>
-    <div id="mainContainer">
-      <content id="mainContent" select=":not(paper-toolbar):not(.paper-header)"></content>
-    </div>
-    <div id="headerContainer">
-      <div class="bg-container">
-        <div id="condensedHeaderBg"></div>
-        <div id="headerBg"></div>
-      </div>
-      <content id="headerContent" select="paper-toolbar, .paper-header"></content>
-    </div>
-  </template>
-</dom-module>
-
-<script>
-(function() {
-
-  'use strict';
-
-  Polymer({
-
-    /**
-     * Fired when the content has been scrolled.
-     *
-     * @event content-scroll
-     */
-
-    /**
-     * Fired when the header is transformed.
-     *
-     * @event paper-header-transform
-     */
-
-    is: 'paper-scroll-header-panel',
-
-    behaviors: [
-      Polymer.IronResizableBehavior
+      Polymer.IronControlState,
+      Polymer.IronButtonState
     ],
 
     properties: {
 
       /**
-       * If true, the header's height will condense to `condensedHeaderHeight`
-       * as the user scrolls down from the top of the content area.
-       */
-      condenses: {
-        type: Boolean,
-        value: false
-      },
-
-      /**
-       * If true, no cross-fade transition from one background to another.
-       */
-      noDissolve: {
-        type: Boolean,
-        value: false
-      },
-
-      /**
-       * If true, the header doesn't slide back in when scrolling back up.
-       */
-      noReveal: {
-        type: Boolean,
-        value: false
-      },
-
-      /**
-       * If true, the header is fixed to the top and never moves away.
-       */
-      fixed: {
-        type: Boolean,
-        value: false
-      },
-
-      /**
-       * If true, the condensed header is always shown and does not move away.
-       */
-      keepCondensedHeader: {
-        type: Boolean,
-        value: false
-      },
-
-      /**
-       * The height of the header when it is at its full size.
+       * If true, ink ripple effect is disabled.
        *
-       * By default, the height will be measured when it is ready.  If the height
-       * changes later the user needs to either set this value to reflect the
-       * new height or invoke `measureHeaderHeight()`.
+       * @attribute noink
        */
-      headerHeight: {
-        type: Number,
-        value: 0
-      },
-
-      /**
-       * The height of the header when it is condensed.
-       *
-       * By default, `condensedHeaderHeight` is 1/3 of `headerHeight` unless
-       * this is specified.
-       */
-      condensedHeaderHeight: {
-        type: Number,
-        value: 0
-      },
-
-      /**
-       * By default, the top part of the header stays when the header is being
-       * condensed.  Set this to true if you want the top part of the header
-       * to be scrolled away.
-       */
-      scrollAwayTopbar: {
+      noink: {
         type: Boolean,
         value: false
-      },
-
-      /**
-       * The state of the header. The initial value is `HEADER_STATE_EXPANDED`.
-       * Depending on the configuration and the `scrollTop` value,
-       * the header state could change to
-       * `HEADER_STATE_HIDDEN`, `HEADER_STATE_CONDENSED` and `HEADER_STATE_INTERPOLATED`
-       */
-      headerState: {
-        type: Number,
-        readOnly: true,
-        value: 0
-      },
-
-      _prevScrollTop: {
-        type: Number,
-        value: 0
-      },
-
-      _y: {
-        type: Number,
-        value: 0
-      },
-
-      /** @type {number|null} */
-      _defaultCondsensedHeaderHeight: {
-        type: Number,
-        value: 0
       }
+
     },
 
-    observers: [
-      '_setup(headerHeight, condensedHeaderHeight, fixed)',
-      '_condensedHeaderHeightChanged(condensedHeaderHeight)',
-      '_headerHeightChanged(headerHeight, condensedHeaderHeight)',
-      '_condensesChanged(condenses)',
-    ],
+    hostAttributes: {
+      role: 'tab'
+    },
 
     listeners: {
-      'iron-resize': 'measureHeaderHeight'
+      down: '_updateNoink'
     },
 
-    ready: function() {
-      this.async(this.measureHeaderHeight, 5);
-      this._scrollHandler = this._scroll.bind(this);
-      this.scroller.addEventListener('scroll', this._scrollHandler);
+    attached: function() {
+      this._updateNoink();
     },
 
-    /**
-     * The header's initial state
-     *
-     * @property HEADER_STATE_EXPANDED
-     * @type number
-     */
-    HEADER_STATE_EXPANDED: 0,
-
-    /**
-     * The header's state when it's hidden.
-     *
-     * @property HEADER_STATE_HIDDEN
-     * @type number
-     */
-    HEADER_STATE_HIDDEN: 1,
-
-    /**
-     * The header's state when it's condensed.
-     *
-     * @property HEADER_STATE_CONDENSED
-     * @type number
-     */
-    HEADER_STATE_CONDENSED: 2,
-
-    /**
-     * The header's state when its progress is somewhere between
-     * the `hidden` and `condensed` state.
-     *
-     * @property HEADER_STATE_INTERPOLATED
-     * @type number
-     */
-    HEADER_STATE_INTERPOLATED: 3,
-
-    /**
-     * Returns the header element.
-     *
-     * @property header
-     * @type Object
-     */
-    get header() {
-      return Polymer.dom(this.$.headerContent).getDistributedNodes()[0];
+    get _parentNoink () {
+      var parent = Polymer.dom(this).parentNode;
+      return !!parent && !!parent.noink;
     },
 
-    /**
-     * Returns the content element.
-     *
-     * @property content
-     * @type Object
-     */
-    get content() {
-      return Polymer.dom(this.$.mainContent).getDistributedNodes()[0];
-    },
+    _updateNoink: function() {
+      this.noink = !!this.noink || !!this._parentNoink;
+    }
+  });
 
-    /**
-     * Returns the scrollable element.
-     *
-     * @property scroller
-     * @type Object
-     */
-    get scroller() {
-      return this.$.mainContainer;
-    },
+</script>
+<dom-module id="paper-tabs" assetpath="../bower_components/paper-tabs/">
 
-    get _headerMaxDelta() {
-      return this.keepCondensedHeader ? this._headerMargin : this.headerHeight;
-    },
+  <style>
 
-    get _headerMargin() {
-      return this.headerHeight - this.condensedHeaderHeight;
-    },
+    :host {
+      @apply(--layout);
+      @apply(--layout-center);
 
-    _y: 0,
+      height: 48px;
+      font-size: 14px;
+      font-weight: 500;
+      overflow: hidden;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
 
-    _prevScrollTop: 0,
+      @apply(--paper-tabs);
+    }
 
-    /**
-     * Invoke this to tell `paper-scroll-header-panel` to re-measure the header's
-     * height.
-     *
-     * @method measureHeaderHeight
-     */
-    measureHeaderHeight: function() {
-      var header = this.header;
-      if (header && header.offsetHeight) {
-        this.headerHeight = header.offsetHeight;
+    #tabsContainer {
+      position: relative;
+      height: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    #tabsContent {
+      height: 100%;
+    }
+
+    #tabsContent.scrollable {
+      position: absolute;
+      white-space: nowrap;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .not-visible {
+      opacity: 0;
+    }
+
+    paper-icon-button {
+      width: 24px;
+      padding: 16px;
+    }
+
+    #selectionBar {
+      position: absolute;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: var(--paper-tabs-selection-bar-color, --paper-yellow-a100);
+      -webkit-transform-origin: left center;
+      transform-origin: left center;
+      -webkit-transform: scale(0);
+      transform: scale(0);
+      transition: -webkit-transform;
+      transition: transform;
+
+      @apply(--paper-tabs-selection-bar);
+    }
+
+    #selectionBar.align-bottom {
+      top: 0;
+      bottom: auto;
+    }
+
+    #selectionBar.expand {
+      transition-duration: 0.15s;
+      transition-timing-function: cubic-bezier(0.4, 0.0, 1, 1);
+    }
+
+    #selectionBar.contract {
+      transition-duration: 0.18s;
+      transition-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
+    }
+
+    #tabsContent > ::content > *:not(#selectionBar) {
+      height: 100%;
+    }
+
+  </style>
+
+  <template>
+
+    <paper-icon-button icon="paper-tabs:chevron-left" class$="[[_computeScrollButtonClass(_leftHidden, scrollable, hideScrollButtons)]]" on-up="_onScrollButtonUp" on-down="_onLeftScrollButtonDown"></paper-icon-button>
+
+    <div id="tabsContainer" class="flex" on-scroll="_scroll">
+
+      <div id="tabsContent" class$="[[_computeTabsContentClass(scrollable)]]">
+
+        <content select="*"></content>
+
+        <div id="selectionBar" class$="[[_computeSelectionBarClass(noBar, alignBottom)]]" on-transitionend="_onBarTransitionEnd"></div>
+
+      </div>
+
+    </div>
+
+    <paper-icon-button icon="paper-tabs:chevron-right" class$="[[_computeScrollButtonClass(_rightHidden, scrollable, hideScrollButtons)]]" on-up="_onScrollButtonUp" on-down="_onRightScrollButtonDown"></paper-icon-button>
+
+  </template>
+
+</dom-module>
+
+<script>
+
+  Polymer({
+
+    is: 'paper-tabs',
+
+    behaviors: [
+      Polymer.IronResizableBehavior,
+      Polymer.IronMenubarBehavior
+    ],
+
+    properties: {
+
+      /**
+       * If true, ink ripple effect is disabled.
+       */
+      noink: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * If true, the bottom bar to indicate the selected tab will not be shown.
+       */
+      noBar: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * If true, the slide effect for the bottom bar is disabled.
+       */
+      noSlide: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * If true, tabs are scrollable and the tab width is based on the label width.
+       */
+      scrollable: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * If true, dragging on the tabs to scroll is disabled.
+       */
+      disableDrag: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * If true, scroll buttons (left/right arrow) will be hidden for scrollable tabs.
+       */
+      hideScrollButtons: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * If true, the tabs are aligned to bottom (the selection bar appears at the top).
+       */
+      alignBottom: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * Gets or sets the selected element. The default is to use the index of the item.
+       */
+      selected: {
+        type: String,
+        notify: true
+      },
+
+      selectable: {
+        type: String,
+        value: 'paper-tab'
+      },
+
+      _step: {
+        type: Number,
+        value: 10
+      },
+
+      _holdDelay: {
+        type: Number,
+        value: 1
+      },
+
+      _leftHidden: {
+        type: Boolean,
+        value: false
+      },
+
+      _rightHidden: {
+        type: Boolean,
+        value: false
+      },
+
+      _previousTab: {
+        type: Object
       }
     },
 
-    /**
-     * Scroll to a specific y coordinate.
-     *
-     * @method scroll
-     * @param {number} top The coordinate to scroll to, along the y-axis.
-     * @param {boolean} smooth true if the scroll position should be smoothly adjusted.
-     */
-    scroll: function(top, smooth) {
-      // the scroll event will trigger _updateScrollState directly, 
-      // However, _updateScrollState relies on the previous `scrollTop` to update the states.
-      // Calling _updateScrollState will ensure that the states are synced correctly.
+    hostAttributes: {
+      role: 'tablist'
+    },
 
-      if (smooth) {
-        // TODO(blasten): use CSS scroll-behavior once it ships in Chrome.
-        var easingFn = function easeOutQuad(t, b, c, d) {
-          t /= d;
-          return -c * t*(t-2) + b;
-        };
-        var animationId = Math.random();
-        var duration = 200;
-        var startTime = Date.now();
-        var currentScrollTop = this.scroller.scrollTop;
-        var deltaScrollTop = top - currentScrollTop;
+    listeners: {
+      'iron-resize': '_onResize',
+      'iron-select': '_onIronSelect',
+      'iron-deselect': '_onIronDeselect'
+    },
 
-        this._currentAnimationId = animationId;
+    _computeScrollButtonClass: function(hideThisButton, scrollable, hideScrollButtons) {
+      if (!scrollable || hideScrollButtons) {
+        return 'hidden';
+      }
 
-        (function updateFrame() {
-          var now = Date.now();
-          var elapsedTime = now - startTime;
+      if (hideThisButton) {
+        return 'not-visible';
+      }
 
-          if (elapsedTime > duration) {
-            this.scroller.scrollTop = top;
-            this._updateScrollState(top);
+      return '';
+    },
 
-          } else if (this._currentAnimationId === animationId) {
-            this.scroller.scrollTop = easingFn(elapsedTime, currentScrollTop, deltaScrollTop, duration);
-            requestAnimationFrame(updateFrame.bind(this));
-          }
+    _computeTabsContentClass: function(scrollable) {
+      return scrollable ? 'scrollable' : 'horizontal layout';
+    },
 
-        }).call(this);
-
-      } else {
-        this.scroller.scrollTop = top;
-        this._updateScrollState(top);
+    _computeSelectionBarClass: function(noBar, alignBottom) {
+      if (noBar) {
+        return 'hidden';
+      } else if (alignBottom) {
+        return 'align-bottom';
       }
     },
 
-   /**
-     * Condense the header.
-     *
-     * @method condense
-     * @param {boolean} smooth true if the scroll position should be smoothly adjusted.
-     */
-    condense: function(smooth) {
-      if (this.condenses && !this.fixed && !this.noReveal) {
-        switch (this.headerState) {
-          case this.HEADER_STATE_HIDDEN:
-            this.scroll(this.scroller.scrollTop - (this._headerMaxDelta - this._headerMargin), smooth);
-          break;
-          case this.HEADER_STATE_EXPANDED:
-          case this.HEADER_STATE_INTERPOLATED:
-            this.scroll(this._headerMargin, smooth);
-          break;
-        }
-      }
+    // TODO(cdata): Add `track` response back in when gesture lands.
+
+    _onResize: function() {
+      this.debounce('_onResize', function() {
+        this._scroll();
+        this._tabChanged(this.selectedItem);
+      }, 10);
     },
 
-    /**
-     * Scroll to the top of the content.
-     *
-     * @method scrollToTop
-     * @param {boolean} smooth true if the scroll position should be smoothly adjusted.
-     */
-    scrollToTop: function(smooth) {
-      this.scroll(0, smooth);
+    _onIronSelect: function(event) {
+      this._tabChanged(event.detail.item, this._previousTab);
+      this._previousTab = event.detail.item;
+      this.cancelDebouncer('tab-changed');
     },
 
-    _headerHeightChanged: function(headerHeight) {
-      if (this._defaultCondsensedHeaderHeight !== null) {
-        this._defaultCondsensedHeaderHeight = Math.round(headerHeight * 1/3);
-        this.condensedHeaderHeight = this._defaultCondsensedHeaderHeight;
-      }
+    _onIronDeselect: function(event) {
+      this.debounce('tab-changed', function() {
+        this._tabChanged(null, this._previousTab);
+      // See polymer/polymer#1305
+      }, 1);
     },
 
-    _condensedHeaderHeightChanged: function(condensedHeaderHeight) {
-      if (condensedHeaderHeight) {
-        // a user custom value
-        if (this._defaultCondsensedHeaderHeight != condensedHeaderHeight) {
-          // disable the default value
-          this._defaultCondsensedHeaderHeight = null;
-        }
-      }
-    },
-
-    _condensesChanged: function() {
-      this._updateScrollState(this.scroller.scrollTop);
-      this._condenseHeader(null);
-    },
-
-    _setup: function() {
-      var s = this.scroller.style;
-
-      s.paddingTop = this.fixed ? '' : this.headerHeight + 'px';
-      s.top = this.fixed ? this.headerHeight + 'px' : '';
-
-      if (this.fixed) {
-        this._setHeaderState(this.HEADER_STATE_EXPANDED);
-        this._transformHeader(null);
-      } else {
-        switch (this.headerState) {
-          case this.HEADER_STATE_HIDDEN:
-            this._transformHeader(this._headerMaxDelta);
-            break;
-          case this.HEADER_STATE_CONDENSED:
-            this._transformHeader(this._headerMargin);
-            break;
-        }
-      }
-    },
-
-    _transformHeader: function(y) {
-      this._translateY(this.$.headerContainer, -y);
-
-      if (this.condenses) {
-        this._condenseHeader(y);
-      }
-
-      this.fire('paper-header-transform',
-        { y: y,
-          height: this.headerHeight,
-          condensedHeight: this.condensedHeaderHeight
-        }
+    get _tabContainerScrollSize () {
+      return Math.max(
+        0,
+        this.$.tabsContainer.scrollWidth -
+          this.$.tabsContainer.offsetWidth
       );
     },
 
-    _condenseHeader: function(y) {
-      var reset = (y === null);
+    _scroll: function() {
+      var scrollLeft;
 
-      // adjust top bar in paper-header so the top bar stays at the top
-      if (!this.scrollAwayTopbar && this.header && this.header.$ && this.header.$.topBar) {
-        this._translateY(this.header.$.topBar,
-            reset ? null : Math.min(y, this._headerMargin));
+      if (!this.scrollable) {
+        return;
       }
-      // transition header bg
-      if (!this.noDissolve) {
-        this.$.headerBg.style.opacity = reset ? '' :
-            ( (this._headerMargin - y) / this._headerMargin);
-      }
-      // adjust header bg so it stays at the center
-      this._translateY(this.$.headerBg, reset ? null : y / 2);
-      // transition condensed header bg
-      if (!this.noDissolve) {
-        this.$.condensedHeaderBg.style.opacity = reset ? '' :
-            (y / this._headerMargin);
 
-        // adjust condensed header bg so it stays at the center
-        this._translateY(this.$.condensedHeaderBg, reset ? null : y / 2);
-      }
+      scrollLeft = this.$.tabsContainer.scrollLeft;
+
+      this._leftHidden = scrollLeft === 0;
+      this._rightHidden = scrollLeft === this._tabContainerScrollSize;
     },
 
-    _translateY: function(node, y) {
-      this.transform((y === null) ? '' : 'translate3d(0, ' + y + 'px, 0)', node);
+    _onLeftScrollButtonDown: function() {
+      this._holdJob = setInterval(this._scrollToLeft.bind(this), this._holdDelay);
     },
 
-    /** @param {Event=} event */
-    _scroll: function(event) {
-      if (this.header) {
-        this._updateScrollState(this.scroller.scrollTop);
-
-        this.fire('content-scroll', {
-          target: this.scroller
-        },
-        {
-          cancelable: false
-        });
-      }
+    _onRightScrollButtonDown: function() {
+      this._holdJob = setInterval(this._scrollToRight.bind(this), this._holdDelay);
     },
 
-    _updateScrollState: function(scrollTop) {
-      var deltaScrollTop = scrollTop - this._prevScrollTop;
-      var y = Math.max(0, (this.noReveal) ? scrollTop : this._y + deltaScrollTop);
+    _onScrollButtonUp: function() {
+      clearInterval(this._holdJob);
+      this._holdJob = null;
+    },
 
-      if (y > this._headerMaxDelta) {
-        y = this._headerMaxDelta;
-        this._setHeaderState(this.HEADER_STATE_HIDDEN);
+    _scrollToLeft: function() {
+      this.$.tabsContainer.scrollLeft -= this._step;
+    },
 
-      } else if (this.condenses && this._prevScrollTop >= scrollTop && scrollTop >= this._headerMargin) {
-        y = Math.max(y, this._headerMargin);
-        this._setHeaderState(this.HEADER_STATE_CONDENSED);
+    _scrollToRight: function() {
+      this.$.tabsContainer.scrollLeft += this._step;
+    },
 
-      } else if (y === 0) {
-        this._setHeaderState(this.HEADER_STATE_EXPANDED);
-
-      } else {
-        this._setHeaderState(this.HEADER_STATE_INTERPOLATED);
+    _tabChanged: function(tab, old) {
+      if (!tab) {
+        this._positionBar(0, 0);
+        return;
       }
 
-      if (!this.fixed && y !== this._y) {
-        this._transformHeader(y);
-      }
+      var r = this.$.tabsContent.getBoundingClientRect();
+      var w = r.width;
+      var tabRect = tab.getBoundingClientRect();
+      var tabOffsetLeft = tabRect.left - r.left;
 
-      this._prevScrollTop = Math.max(scrollTop, 0);
-      this._y = y;
-    }
-  });
-
-})();
-
-</script>
-<dom-module id="iron-a11y-announcer" assetpath="../bower_components/iron-a11y-announcer/">
-  <style>
-    :host {
-      display: inline-block;
-      position: fixed;
-      clip: rect(0px,0px,0px,0px);
-    }
-  </style>
-
-  <template>
-    <span aria-live$="[[mode]]">[[_text]]</span>
-  </template>
-
-  <script>
-
-    (function() {
-      'use strict';
-
-      Polymer.IronA11yAnnouncer = Polymer({
-        is: 'iron-a11y-announcer',
-
-        properties: {
-
-          /**
-           * The value of mode is used to set the `aria-live` attribute
-           * for the element that will be announced. Valid values are: `off`,
-           * `polite` and `assertive`.
-           */
-          mode: {
-            type: String,
-            value: 'polite'
-          },
-
-          _text: {
-            type: String,
-            value: ''
-          }
-        },
-
-        created: function() {
-          if (!Polymer.IronA11yAnnouncer.instance) {
-            Polymer.IronA11yAnnouncer.instance = this;
-          }
-
-          document.body.addEventListener('iron-announce', this._onIronAnnounce.bind(this));
-        },
-
-        /**
-         * Cause a text string to be announced by screen readers.
-         *
-         * @param {string} text The text that should be announced.
-         */
-        announce: function(text) {
-          this._text = '';
-          this.async(function() {
-            this._text = text;
-          }, 100);
-        },
-
-        _onIronAnnounce: function(event) {
-          if (event.detail && event.detail.text) {
-            this.announce(event.detail.text);
-          }
-        }
-      });
-
-      Polymer.IronA11yAnnouncer.instance = null;
-
-      Polymer.IronA11yAnnouncer.requestAvailability = function() {
-        if (!Polymer.IronA11yAnnouncer.instance) {
-          Polymer.IronA11yAnnouncer.instance = document.createElement('iron-a11y-announcer');
-        }
-
-        document.body.appendChild(Polymer.IronA11yAnnouncer.instance);
+      this._pos = {
+        width: this._calcPercent(tabRect.width, w),
+        left: this._calcPercent(tabOffsetLeft, w)
       };
-    })();
 
-  </script>
-</dom-module>
-<dom-module id="paper-toast" assetpath="../bower_components/paper-toast/">
-  <style>
-    :host {
-      display: inline-block;
-      position: fixed;
-
-      background: #323232;
-      color: #f1f1f1;
-      min-height: 48px;
-      min-width: 288px;
-      padding: 16px 24px 12px;
-      box-sizing: border-box;
-      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-      border-radius: 2px;
-      bottom: 12px;
-      left: 12px;
-      font-size: 14px;
-      cursor: default;
-
-      -webkit-transition: visibility 0.3s, -webkit-transform 0.3s;
-      transition: visibility 0.3s, transform 0.3s;
-
-      -webkit-transform: translateY(100px);
-      transform: translateY(100px);
-
-      visibility: hidden;
-    }
-
-    :host(.capsule) {
-      border-radius: 24px;
-    }
-
-    :host(.fit-bottom) {
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      min-width: 0;
-      border-radius: 0;
-    }
-
-    :host(.paper-toast-open){
-      visibility: visible;
-
-      -webkit-transform: translateY(0px);
-      transform: translateY(0px);
-    }
-  </style>
-  <template>
-    <span id="label">{{text}}</span>
-    <content></content>
-  </template>
-</dom-module>
-<script>
-(function() {
-
-  var PaperToast = Polymer({
-    is: 'paper-toast',
-
-    properties: {
-      /**
-       * The duration in milliseconds to show the toast.
-       */
-      duration: {
-        type: Number,
-        value: 3000
-      },
-
-      /**
-       * The text to display in the toast.
-       */
-      text: {
-        type: String,
-        value: ""
-      },
-
-      /**
-       * True if the toast is currently visible.
-       */
-      visible: {
-        type: Boolean,
-        readOnly: true,
-        value: false,
-        observer: '_visibleChanged'
+      if (this.noSlide || old == null) {
+        // position bar directly without animation
+        this._positionBar(this._pos.width, this._pos.left);
+        return;
       }
-    },
 
-    created: function() {
-      Polymer.IronA11yAnnouncer.requestAvailability();
-    },
+      var oldRect = old.getBoundingClientRect();
+      var oldIndex = this.items.indexOf(old);
+      var index = this.items.indexOf(tab);
+      var m = 5;
 
-    ready: function() {
-      this.async(function() {
-        this.hide();
-      });
-    },
+      // bar animation: expand
+      this.$.selectionBar.classList.add('expand');
 
-    /**
-     * Show the toast.
-     * @method show
-     */
-    show: function() {
-      if (PaperToast.currentToast) {
-        PaperToast.currentToast.hide();
-      }
-      PaperToast.currentToast = this;
-      this.removeAttribute('aria-hidden');
-      this._setVisible(true);
-      this.fire('iron-announce', {
-        text: this.text
-      });
-      this.debounce('hide', this.hide, this.duration);
-    },
-
-    /**
-     * Hide the toast
-     */
-    hide: function() {
-      this.setAttribute('aria-hidden', 'true');
-      this._setVisible(false);
-    },
-
-    /**
-     * Toggle the opened state of the toast.
-     * @method toggle
-     */
-    toggle: function() {
-      if (!this.visible) {
-        this.show();
+      if (oldIndex < index) {
+        this._positionBar(this._calcPercent(tabRect.left + tabRect.width - oldRect.left, w) - m,
+            this._left);
       } else {
-        this.hide();
+        this._positionBar(this._calcPercent(oldRect.left + oldRect.width - tabRect.left, w) - m,
+            this._calcPercent(tabOffsetLeft, w) + m);
+      }
+
+      if (this.scrollable) {
+        this._scrollToSelectedIfNeeded(tabRect.width, tabOffsetLeft);
       }
     },
 
-    _visibleChanged: function(visible) {
-      this.toggleClass('paper-toast-open', visible);
+    _scrollToSelectedIfNeeded: function(tabWidth, tabOffsetLeft) {
+      var l = tabOffsetLeft - this.$.tabsContainer.scrollLeft;
+      if (l < 0) {
+        this.$.tabsContainer.scrollLeft += l;
+      } else {
+        l += (tabWidth - this.$.tabsContainer.offsetWidth);
+        if (l > 0) {
+          this.$.tabsContainer.scrollLeft += l;
+        }
+      }
+    },
+
+    _calcPercent: function(w, w0) {
+      return 100 * w / w0;
+    },
+
+    _positionBar: function(width, left) {
+      width = width || 0;
+      left = left || 0;
+
+      this._width = width;
+      this._left = left;
+      this.transform(
+          'translate3d(' + left + '%, 0, 0) scaleX(' + (width / 100) + ')',
+          this.$.selectionBar);
+    },
+
+    _onBarTransitionEnd: function(e) {
+      var cl = this.$.selectionBar.classList;
+      // bar animation: expand -> contract
+      if (cl.contains('expand')) {
+        cl.remove('expand');
+        cl.add('contract');
+        this._positionBar(this._pos.width, this._pos.left);
+      // bar animation done
+      } else if (cl.contains('contract')) {
+        cl.remove('contract');
+      }
     }
+
   });
-
-  PaperToast.currentToast = null;
-
-})();
-</script>
-<dom-module id="paper-toolbar" assetpath="../bower_components/paper-toolbar/">
-
-  <style>
-    :host {
-      /* technical */
-      display: block;
-      position: relative;
-      box-sizing: border-box;
-      -moz-box-sizing: border-box;
-
-      /* size */
-      height: 64px;
-
-      background: var(--paper-toolbar-background, --default-primary-color);
-      color: var(--paper-toolbar-color, --text-primary-color);
-
-      @apply(--paper-toolbar);
-    }
-
-    :host(.animate) {
-      /* transition */
-      transition: height 0.18s ease-in;
-    }
-
-    :host(.medium-tall) {
-      height: 128px;
-    }
-
-    :host(.tall) {
-      height: 192px;
-    }
-
-    .toolbar-tools {
-      position: relative;
-      height: 64px;
-      padding: 0 16px;
-      pointer-events: none;
-    }
-
-    /*
-     * TODO: Where should media query breakpoints live so they can be shared between elements?
-     */
-
-    @media (max-width: 639px) {
-      :host {
-        height: 56px;
-      }
-
-      :host(.medium-tall) {
-        height: 112px;
-      }
-
-      :host(.tall) {
-        height: 168px;
-      }
-
-      .toolbar-tools {
-        height: 56px;
-      }
-    }
-
-    #topBar {
-      position: relative;
-    }
-
-    /* middle bar */
-    #middleBar {
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-    }
-
-    :host(.tall) #middleBar,
-    :host(.medium-tall) #middleBar {
-      -webkit-transform: translateY(100%);
-      transform: translateY(100%);
-    }
-
-    /* bottom bar */
-    #bottomBar {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      left: 0;
-    }
-
-    /*
-     * make elements (e.g. buttons) respond to mouse/touch events
-     *
-     * `.toolbar-tools` disables touch events so multiple toolbars can stack and not
-     * absorb events. All children must have pointer events re-enabled to work as
-     * expected.
-     */
-    .toolbar-tools > ::content > *:not([disabled]) {
-      pointer-events: auto;
-    }
-
-    .toolbar-tools > ::content .title {
-      @apply(--paper-font-title);
-      @apply(--layout-flex);
-
-      pointer-events: none;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-
-      /*
-       * Polymer/polymer/issues/1525
-       * --paper-font-title defines a `font-weight`
-       * let's override its value, but we need `important!`
-       * because all mixins are resolved in rule's selector that has higher precedence
-       * than the current selector.
-       */
-      font-weight: 400 !important;
-    }
-
-    /**
-     * TODO: Refactor these selectors
-     * Work in progress.
-     */
-    .toolbar-tools > ::content paper-icon-button[icon=menu] {
-      margin-right: 24px;
-    }
-
-    .toolbar-tools > ::content > .title,
-    .toolbar-tools > ::content[select=".middle"] > .title,
-    .toolbar-tools > ::content[select=".bottom"] > .title {
-      margin-left: 56px;
-    }
-
-    .toolbar-tools > ::content > paper-icon-button + .title,
-    .toolbar-tools > ::content[select=".middle"] paper-icon-button + .title,
-    .toolbar-tools > ::content[select=".bottom"] paper-icon-button + .title {
-      margin-left: 0;
-    }
-
-    .toolbar-tools > ::content > .fit {
-      position: absolute;
-      top: auto;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      width: auto;
-      margin: 0;
-    }
-
-  </style>
-
-  <template>
-
-    <div id="topBar" class$="[[_computeBarClassName(justify)]]">
-      <content select=":not(.middle):not(.bottom)"></content>
-    </div>
-
-    <div id="middleBar" class$="[[_computeBarClassName(middleJustify)]]">
-      <content select=".middle"></content>
-    </div>
-
-    <div id="bottomBar" class$="[[_computeBarClassName(bottomJustify)]]">
-      <content select=".bottom"></content>
-    </div>
-
-  </template>
-
-</dom-module>
-
-<script>
-
-  (function() {
-
-    'use strict';
-
-    function classNames(obj) {
-      var classNames = [];
-      for (var key in obj) {
-        if (obj.hasOwnProperty(key) && obj[key]) {
-          classNames.push(key);
-        }
-      }
-
-      return classNames.join(' ');
-    }
-
-    Polymer({
-
-      is: 'paper-toolbar',
-
-      hostAttributes: {
-        'role': 'toolbar'
-      },
-
-      properties: {
-
-        /**
-         * Controls how the items are aligned horizontally when they are placed
-         * at the bottom.
-         * Options are `start`, `center`, `end`, `justified` and `around`.
-         *
-         * @attribute bottomJustify
-         * @type string
-         * @default ''
-         */
-        bottomJustify: {
-          type: String,
-          value: ''
-        },
-
-        /**
-         * Controls how the items are aligned horizontally.
-         * Options are `start`, `center`, `end`, `justified` and `around`.
-         *
-         * @attribute justify
-         * @type string
-         * @default ''
-         */
-        justify: {
-          type: String,
-          value: ''
-        },
-
-        /**
-         * Controls how the items are aligned horizontally when they are placed
-         * in the middle.
-         * Options are `start`, `center`, `end`, `justified` and `around`.
-         *
-         * @attribute middleJustify
-         * @type string
-         * @default ''
-         */
-        middleJustify: {
-          type: String,
-          value: ''
-        }
-
-      },
-
-      attached: function() {
-        this._observer = this._observe(this);
-        this._updateAriaLabelledBy();
-      },
-
-      detached: function() {
-        if (this._observer) {
-          this._observer.disconnect();
-        }
-      },
-
-      _observe: function(node) {
-        var observer = new MutationObserver(function() {
-          this._updateAriaLabelledBy();
-        }.bind(this));
-        observer.observe(node, {
-          childList: true,
-          subtree: true
-        });
-        return observer;
-      },
-
-      _updateAriaLabelledBy: function() {
-        var labelledBy = [];
-        var contents = Polymer.dom(this.root).querySelectorAll('content');
-        for (var content, index = 0; content = contents[index]; index++) {
-          var nodes = Polymer.dom(content).getDistributedNodes();
-          for (var node, jndex = 0; node = nodes[jndex]; jndex++) {
-            if (node.classList && node.classList.contains('title')) {
-              if (node.id) {
-                labelledBy.push(node.id);
-              } else {
-                var id = 'paper-toolbar-label-' + Math.floor(Math.random() * 10000);
-                node.id = id;
-                labelledBy.push(id);
-              }
-            }
-          }
-        }
-        if (labelledBy.length > 0) {
-          this.setAttribute('aria-labelledby', labelledBy.join(' '));
-        }
-      },
-
-      _computeBarClassName: function(barJustify) {
-        var classObj = {
-          'center': true,
-          'horizontal': true,
-          'layout': true,
-          'toolbar-tools': true
-        };
-
-        // If a blank string or any falsy value is given, no other class name is
-        // added.
-        if (barJustify) {
-          var justifyClassName = (barJustify === 'justified') ?
-              barJustify :
-              barJustify + '-justified';
-
-          classObj[justifyClassName] = true;
-        }
-
-        return classNames(classObj);
-      }
-
-    });
-
-  }());
 
 </script>
 <dom-module id="ym-github-repo" assetpath="ym-github-repo/">
@@ -17213,7 +15935,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       padding: 0px;
     }
 
-    .success, .error {
+    .success,
+    .error,
+    paper-button {
       color: white;
     }
 
@@ -17252,6 +15976,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     paper-button {
       margin: 0px;
+      background-color: #0072D4;
     }
 
     paper-button::shadow paper-ripple {
@@ -17303,8 +16028,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
     (function() {
-
-      var api = {
+      var ajaxService = {
         gettingRepositoryInfo: function() {
           this.$.ajax.generateRequest();
         },
@@ -17316,7 +16040,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         onAjaxSucces: function() {
          this.set('message', { class: 'success', status: true,  text: 'A Repository match was found! :)'} );
-        },
+        }
       };
 
       Polymer({
@@ -17345,14 +16069,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           ajax: {
             type: Object,
             value: {
-              response: {},
+              response: {}
             }
           }
         },
-        settingRequestUrl: api.settingRequestUrl,
-        gettingRepositoryInfo: api.gettingRepositoryInfo,
-        onAjaxError: api.onAjaxError,
-        onAjaxResponse: api.onAjaxSucces
+        settingRequestUrl: ajaxService.settingRequestUrl,
+        gettingRepositoryInfo: ajaxService.gettingRepositoryInfo,
+        onAjaxError: ajaxService.onAjaxError,
+        onAjaxResponse: ajaxService.onAjaxSucces
       });
     })();
   </script>
