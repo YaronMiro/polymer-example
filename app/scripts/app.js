@@ -28,8 +28,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var pages = document.querySelector('iron-pages');
     pages.selected = 0;
 
-    var pages = document.querySelector('paper-tabs');
-    pages.selected = 0; 
+    var tabs = document.querySelector('paper-tabs');
+    tabs.selected = 0; 
 
 
     // imports are loaded and elements have been registered
