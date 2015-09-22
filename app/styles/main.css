@@ -1,21 +1,21 @@
 body {
-  background: #D1DFE8;
+  background: #192533;
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  color: #333; }
+  color: #324053; }
 
-.container {
-  width: 90%;
-  margin: 0 auto;
-  background: white; }
-  .container paper-tab #ink.paper-tab {
-    color: rgba(255, 255, 255, 0.32); }
-  .container #selectionBar.paper-tabs {
-    background-color: #113074; }
-  .container paper-tabs, .container paper-toolbar {
-    background-color: #0072D4;
-    color: #fff;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2); }
-  .container paper-tabs paper-tab.iron-selected {
-    color: #1B3073; }
-  .container paper-tabs[align-bottom] {
-    box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.15); }
+.container paper-tab #ink.paper-tab {
+  color: rgba(255, 255, 255, 0.32); }
+
+.container #selectionBar.paper-tabs {
+  background-color: #0f97f9; }
+
+.container paper-tabs, .container paper-toolbar {
+  background-color: #072648;
+  color: #fff;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2); }
+
+.container paper-tabs paper-tab.iron-selected {
+  color: #0094ff; }
+
+.container paper-tabs[align-bottom] {
+  box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.15); }
