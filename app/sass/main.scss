@@ -7,21 +7,17 @@ body {
 .container {
 
   .demo {
+    padding: 8px;
     margin: 0 auto;
   }
 
-  ym-github-repo {
-    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  }
-
   .paper-font-title {
-    color: #627690;
+    color: #89a1bd;
+    margin-bottom: 3px;
   }
 
 	paper-tab #ink.paper-tab {
-    	color: rgba(255, 255, 255, 0.32);
-    	// color: #DE125D;
-
+    color: rgba(255, 255, 255, 0.32);
 	}
 
 	#selectionBar.paper-tabs {
@@ -29,17 +25,15 @@ body {
 	}
 	
 	paper-tabs, paper-toolbar {
-	background-color: #072648;
-	color: #fff;
-	box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+    background-color: #072648;
+    color: #fff;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
 	}
-	paper-toolbar paper-tabs {
-	//box-shadow: none;
-	}
+
 	paper-tabs paper-tab.iron-selected {
-	color: rgb(0, 148, 255);
+	  color: rgb(0, 148, 255);
 	}
 	paper-tabs[align-bottom] {
-	box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.15);
+	  box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.15);
 	}
 }

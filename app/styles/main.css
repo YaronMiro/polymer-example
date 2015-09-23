@@ -4,13 +4,12 @@ body {
   color: #627690; }
 
 .container .demo {
+  padding: 8px;
   margin: 0 auto; }
 
-.container ym-github-repo {
-  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif; }
-
 .container .paper-font-title {
-  color: #627690; }
+  color: #89a1bd;
+  margin-bottom: 3px; }
 
 .container paper-tab #ink.paper-tab {
   color: rgba(255, 255, 255, 0.32); }
