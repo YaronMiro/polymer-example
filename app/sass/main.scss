@@ -1,10 +1,22 @@
 body {
   background: #192533;
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  color: #324053;
+  color: #627690;
 }
 
 .container {
+
+  .demo {
+    margin: 0 auto;
+  }
+
+  ym-github-repo {
+    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+
+  .paper-font-title {
+    color: #627690;
+  }
 
 	paper-tab #ink.paper-tab {
     	color: rgba(255, 255, 255, 0.32);

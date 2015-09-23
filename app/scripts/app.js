@@ -29,8 +29,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     pages.selected = 0;
 
     var tabs = document.querySelector('paper-tabs');
-    tabs.selected = 0; 
-
+    tabs.selected = 0;
 
     // imports are loaded and elements have been registered
   });
