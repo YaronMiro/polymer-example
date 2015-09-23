@@ -12121,6 +12121,8 @@ styles. All other styles should exist as single lines."
 
 
 
+
+
 </head><body><div hidden="" by-vulcanize=""><dom-module id="iron-icon" assetpath="../bower_components/iron-icon/">
 
   <style>
@@ -14961,19 +14963,519 @@ styles. All other styles should exist as single lines."
   });
 
 </script>
+<dom-module id="paper-spinner" assetpath="../bower_components/paper-spinner/">
+
+  <style>
+/**
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+
+*/
+/**************************/
+/* STYLES FOR THE SPINNER */
+/**************************/
+
+/*
+ * Constants:
+ *      STROKEWIDTH = 3px
+ *      ARCSIZE     = 270 degrees (amount of circle the arc takes up)
+ *      ARCTIME     = 1333ms (time it takes to expand and contract arc)
+ *      ARCSTARTROT = 216 degrees (how much the start location of the arc
+ *                                should rotate each time, 216 gives us a
+ *                                5 pointed star shape (it's 360/5 * 3).
+ *                                For a 7 pointed star, we might do
+ *                                360/7 * 3 = 154.286)
+ *      CONTAINERWIDTH = 28px
+ *      SHRINK_TIME = 400ms
+ */
+
+:host {
+  display: inline-block;
+  position: relative;
+  width: 28px; /* CONTAINERWIDTH */
+  height: 28px; /* CONTAINERWIDTH */
+}
+
+#spinnerContainer {
+  width: 100%;
+  height: 100%;
+
+  /* The spinner does not have any contents that would have to be
+   * flipped if the direction changes. Always use ltr so that the
+   * style works out correctly in both cases. */
+  direction: ltr;
+}
+
+#spinnerContainer.active {
+  /* duration: 360 * ARCTIME / (ARCSTARTROT + (360-ARCSIZE)) */
+  -webkit-animation: container-rotate 1568ms linear infinite;
+  animation: container-rotate 1568ms linear infinite;
+}
+
+@-webkit-keyframes container-rotate {
+  to { -webkit-transform: rotate(360deg) }
+}
+
+@keyframes container-rotate {
+  to { transform: rotate(360deg) }
+}
+
+.spinner-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.layer-1 {
+  border-color: var(--paper-spinner-layer-1-color, --google-blue-500);
+}
+
+.layer-2 {
+  border-color: var(--paper-spinner-layer-2-color, --google-red-500);
+}
+
+.layer-3 {
+  border-color: var(--paper-spinner-layer-3-color, --google-yellow-500);
+}
+
+.layer-4 {
+  border-color: var(--paper-spinner-layer-4-color, --google-blue-500);
+}
+
+/**
+ * IMPORTANT NOTE ABOUT CSS ANIMATION PROPERTIES (keanulee):
+ *
+ * iOS Safari (tested on iOS 8.1) does not handle animation-delay very well - it doesn't
+ * guarantee that the animation will start _exactly_ after that value. So we avoid using
+ * animation-delay and instead set custom keyframes for each color (as layer-2undant as it
+ * seems).
+ *
+ * We write out each animation in full (instead of separating animation-name,
+ * animation-duration, etc.) because under the polyfill, Safari does not recognize those
+ * specific properties properly, treats them as -webkit-animation, and overrides the
+ * other animation rules. See https://github.com/Polymer/platform/issues/53.
+ */
+.active .spinner-layer.layer-1 {
+  /* durations: 4 * ARCTIME */
+  -webkit-animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both, layer-1-fade-in-out 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+  animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both, layer-1-fade-in-out 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+}
+
+.active .spinner-layer.layer-2 {
+  /* durations: 4 * ARCTIME */
+  -webkit-animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both, layer-2-fade-in-out 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+  animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both, layer-2-fade-in-out 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+}
+
+.active .spinner-layer.layer-3 {
+  /* durations: 4 * ARCTIME */
+  -webkit-animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both, layer-3-fade-in-out 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+  animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both, layer-3-fade-in-out 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+}
+
+.active .spinner-layer.layer-4 {
+  /* durations: 4 * ARCTIME */
+  -webkit-animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both, layer-4-fade-in-out 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+  animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both, layer-4-fade-in-out 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+}
+
+@-webkit-keyframes fill-unfill-rotate {
+  12.5% { -webkit-transform: rotate(135deg);  } /* 0.5 * ARCSIZE */
+  25%   { -webkit-transform: rotate(270deg);  } /* 1   * ARCSIZE */
+  37.5% { -webkit-transform: rotate(405deg);  } /* 1.5 * ARCSIZE */
+  50%   { -webkit-transform: rotate(540deg);  } /* 2   * ARCSIZE */
+  62.5% { -webkit-transform: rotate(675deg);  } /* 2.5 * ARCSIZE */
+  75%   { -webkit-transform: rotate(810deg);  } /* 3   * ARCSIZE */
+  87.5% { -webkit-transform: rotate(945deg);  } /* 3.5 * ARCSIZE */
+  to    { -webkit-transform: rotate(1080deg); } /* 4   * ARCSIZE */
+}
+
+@keyframes fill-unfill-rotate {
+  12.5% { transform: rotate(135deg);  } /* 0.5 * ARCSIZE */
+  25%   { transform: rotate(270deg);  } /* 1   * ARCSIZE */
+  37.5% { transform: rotate(405deg);  } /* 1.5 * ARCSIZE */
+  50%   { transform: rotate(540deg);  } /* 2   * ARCSIZE */
+  62.5% { transform: rotate(675deg);  } /* 2.5 * ARCSIZE */
+  75%   { transform: rotate(810deg);  } /* 3   * ARCSIZE */
+  87.5% { transform: rotate(945deg);  } /* 3.5 * ARCSIZE */
+  to    { transform: rotate(1080deg); } /* 4   * ARCSIZE */
+}
+
+/**
+ * HACK: Even though the intention is to have the current .spinner-layer at
+ * `opacity: 1`, we set it to `opacity: 0.99` instead since this forces Chrome
+ * to do proper subpixel rendering for the elements being animated. This is
+ * especially visible in Chrome 39 on Ubuntu 14.04. See:
+ *
+ * - https://github.com/Polymer/paper-spinner/issues/9
+ * - https://code.google.com/p/chromium/issues/detail?id=436255
+ */
+@-webkit-keyframes layer-1-fade-in-out {
+  from { opacity: 0.99; }
+  25% { opacity: 0.99; }
+  26% { opacity: 0; }
+  89% { opacity: 0; }
+  90% { opacity: 0.99; }
+  100% { opacity: 0.99; }
+}
+
+@keyframes layer-1-fade-in-out {
+  from { opacity: 0.99; }
+  25% { opacity: 0.99; }
+  26% { opacity: 0; }
+  89% { opacity: 0; }
+  90% { opacity: 0.99; }
+  100% { opacity: 0.99; }
+}
+
+@-webkit-keyframes layer-2-fade-in-out {
+  from { opacity: 0; }
+  15% { opacity: 0; }
+  25% { opacity: 0.99; }
+  50% { opacity: 0.99; }
+  51% { opacity: 0; }
+}
+
+@keyframes layer-2-fade-in-out {
+  from { opacity: 0; }
+  15% { opacity: 0; }
+  25% { opacity: 0.99; }
+  50% { opacity: 0.99; }
+  51% { opacity: 0; }
+}
+
+@-webkit-keyframes layer-3-fade-in-out {
+  from { opacity: 0; }
+  40% { opacity: 0; }
+  50% { opacity: 0.99; }
+  75% { opacity: 0.99; }
+  76% { opacity: 0; }
+}
+
+@keyframes layer-3-fade-in-out {
+  from { opacity: 0; }
+  40% { opacity: 0; }
+  50% { opacity: 0.99; }
+  75% { opacity: 0.99; }
+  76% { opacity: 0; }
+}
+
+@-webkit-keyframes layer-4-fade-in-out {
+  from { opacity: 0; }
+  65% { opacity: 0; }
+  75% { opacity: 0.99; }
+  90% { opacity: 0.99; }
+  100% { opacity: 0; }
+}
+
+@keyframes layer-4-fade-in-out {
+  from { opacity: 0; }
+  65% { opacity: 0; }
+  75% { opacity: 0.99; }
+  90% { opacity: 0.99; }
+  100% { opacity: 0; }
+}
+
+/**
+ * Patch the gap that appear between the two adjacent div.circle-clipper while the
+ * spinner is rotating (appears on Chrome 38, Safari 7.1, and IE 11).
+ *
+ * Update: the gap no longer appears on Chrome when .spinner-layer's opacity is 0.99,
+ * but still does on Safari and IE.
+ */
+.gap-patch {
+  position: absolute;
+  box-sizing: border-box;
+  top: 0;
+  left: 45%;
+  width: 10%;
+  height: 100%;
+  overflow: hidden;
+  border-color: inherit;
+}
+
+.gap-patch .circle {
+  width: 1000%;
+  left: -450%;
+}
+
+.circle-clipper {
+  display: inline-block;
+  position: relative;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  border-color: inherit;
+}
+
+.circle-clipper .circle {
+  width: 200%;
+}
+
+.circle {
+  box-sizing: border-box;
+  height: 100%;
+  border-width: 3px; /* STROKEWIDTH */
+  border-style: solid;
+  border-color: inherit;
+  border-bottom-color: transparent !important;
+  border-radius: 50%;
+  -webkit-animation: none;
+  animation: none;
+
+  @apply(--layout-fit);
+}
+
+.circle-clipper.left .circle {
+  border-right-color: transparent !important;
+  -webkit-transform: rotate(129deg);
+  transform: rotate(129deg);
+}
+
+.circle-clipper.right .circle {
+  left: -100%;
+  border-left-color: transparent !important;
+  -webkit-transform: rotate(-129deg);
+  transform: rotate(-129deg);
+}
+
+.active .circle-clipper.left .circle {
+  /* duration: ARCTIME */
+  -webkit-animation: left-spin 1333ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+  animation: left-spin 1333ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+}
+
+.active .circle-clipper.right .circle {
+  /* duration: ARCTIME */
+  -webkit-animation: right-spin 1333ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+  animation: right-spin 1333ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+}
+
+@-webkit-keyframes left-spin {
+  from { -webkit-transform: rotate(130deg); }
+  50% { -webkit-transform: rotate(-5deg); }
+  to { -webkit-transform: rotate(130deg); }
+}
+
+@keyframes left-spin {
+  from { transform: rotate(130deg); }
+  50% { transform: rotate(-5deg); }
+  to { transform: rotate(130deg); }
+}
+
+@-webkit-keyframes right-spin {
+  from { -webkit-transform: rotate(-130deg); }
+  50% { -webkit-transform: rotate(5deg); }
+  to { -webkit-transform: rotate(-130deg); }
+}
+
+@keyframes right-spin {
+  from { transform: rotate(-130deg); }
+  50% { transform: rotate(5deg); }
+  to { transform: rotate(-130deg); }
+}
+
+#spinnerContainer.cooldown {
+  /* duration: SHRINK_TIME */
+  -webkit-animation: container-rotate 1568ms linear infinite, fade-out 400ms cubic-bezier(0.4, 0.0, 0.2, 1);
+  animation: container-rotate 1568ms linear infinite, fade-out 400ms cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+@-webkit-keyframes fade-out {
+  from { opacity: 0.99; }
+  to { opacity: 0; }
+}
+
+@keyframes fade-out {
+  from { opacity: 0.99; }
+  to { opacity: 0; }
+}
+
+</style>
+
+  <template>
+
+    <div id="spinnerContainer" class-name="[[_spinnerContainerClassName]]">
+      <div class="spinner-layer layer-1">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer layer-2">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer layer-3">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer layer-4">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+
+  </template>
+
+  <script>
+
+    Polymer({
+
+      is: 'paper-spinner',
+
+      listeners: {
+        'animationend': 'reset',
+        'webkitAnimationEnd': 'reset'
+      },
+
+      properties: {
+
+        /**
+         * Displays the spinner.
+         *
+         * @attribute active
+         * @type boolean
+         * @default false
+         */
+        active: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true,
+          observer: '_activeChanged'
+        },
+
+        /**
+         * Alternative text content for accessibility support.
+         * If alt is present, it will add an aria-label whose content matches alt when active.
+         * If alt is not present, it will default to 'loading' as the alt value.
+         *
+         * @attribute alt
+         * @type string
+         * @default 'loading'
+         */
+        alt: {
+          type: String,
+          value: 'loading',
+          observer: '_altChanged'
+        },
+
+        /**
+         * True when the spinner is going from active to inactive. This is represented by a fade
+         * to 0% opacity to the user.
+         */
+        _coolingDown: {
+          type: Boolean,
+          value: false
+        },
+
+        _spinnerContainerClassName: {
+          type: String,
+          computed: '_computeSpinnerContainerClassName(active, _coolingDown)'
+        }
+
+      },
+
+      _computeSpinnerContainerClassName: function(active, coolingDown) {
+        return [
+          active || coolingDown ? 'active' : '',
+          coolingDown ? 'cooldown' : ''
+        ].join(' ');
+      },
+
+      _activeChanged: function(active, old) {
+        this._setAriaHidden(!active);
+        if (!active && old) {
+          this._coolingDown = true;
+        }
+      },
+
+      _altChanged: function(alt) {
+        // user-provided `aria-label` takes precedence over prototype default
+        if (alt === this.getPropertyInfo('alt').value) {
+          this.alt = this.getAttribute('aria-label') || alt;
+        } else {
+          this._setAriaHidden(alt==='');
+          this.setAttribute('aria-label', alt);
+        }
+      },
+
+      _setAriaHidden: function(hidden) {
+        var attr = 'aria-hidden';
+        if (hidden) {
+          this.setAttribute(attr, 'true');
+        } else {
+          this.removeAttribute(attr);
+        }
+      },
+
+      reset: function() {
+        this.active = false;
+        this._coolingDown = false;
+      }
+
+    });
+
+  </script>
+
+</dom-module>
 <dom-module id="style" assetpath="ym-github-repo/style/">
   <template>
     <style>
-      :host {
-        display: block;
-      }
 
       :root {
-        --ym-github-repo-h3: #238f76;
+        --ym-github-repo-green: #238f76;
+        --ym-github-repo-font-family: 'Roboto', 'Noto', sans-serif;
+      }
+
+      :host {
+        display: block;
+        font-family: var(--ym-github-repo-font-family);
+      }
+
+      paper-spinner {
+        margin-left: 5px;
+        vertical-align: middle;
+        --paper-spinner-layer-1-color: var( --ym-github-repo-green);
+        --paper-spinner-layer-2-color: var( --ym-github-repo-green);
+        --paper-spinner-layer-3-color: var( --ym-github-repo-green);
+        --paper-spinner-layer-4-color: var( --ym-github-repo-green);
+      }
+      
+      paper-input {
+        --paper-input-container-focus-color: var( --ym-github-repo-green);
+        --paper-input-container-input-color: #627690;
       }
 
       h3 {
-        color: var(--ym-github-repo-h3);
+        color: var( --ym-github-repo-green);
       }
 
       paper-button {
@@ -15013,12 +15515,16 @@ styles. All other styles should exist as single lines."
     <div class="github-repo-wrapper">
       <h3 class="paper-font-title">Github repository block</h3>
       <div class="paper-font-body1">Fill the fields to get an info about the repository (only for public repositories).</div>
-      
       <paper-input label="Owner" class="paper-font-body2" value="{{owner}}"></paper-input>
       <paper-input label="Name" class="paper-font-body2" value="{{name}}"></paper-input>
       <span class="paper-font-code1 url">{{url}}</span>
       
-      <p><paper-button gray-ripple="" raised="" on-click="_gettingRepositoryInfo">get repository info</paper-button></p>
+      <p>
+        <paper-button gray-ripple="" raised="" on-click="_generateRequest">get repository info</paper-button>
+        
+        <paper-spinner id="spinner" alt="Loading repository info"></paper-spinner>
+      </p>
+      
       <div> <span hidden$="{{!error.text}}">{{error.text}}</span></div>
       
       <iron-ajax id="ajax" url="{{url}}" handle-as="json" on-error="_onAjaxError" on-response="_onAjaxResponse" last-response="{{ajax.response}}">
@@ -15030,7 +15536,9 @@ styles. All other styles should exist as single lines."
               <div>owner:</div>
               <a href="{{ajax.response.owner.url}}">{{ajax.response.owner.login}}</a>
             </li>
-            <li class="image"><iron-image preload="" fade="" sizing="contain" src="{{ajax.response.owner.avatar_url}}"></iron-image></li>
+            <li class="image">
+              <iron-image id="preload3cfade" preload="" fade="" sizing="contain" src="{{ajax.response.owner.avatar_url}}"></iron-image>
+            </li>
             <li>
               <a href="{{ajax.response.html_url}}">{{ajax.response.name}}</a>
             </li>
@@ -15043,9 +15551,18 @@ styles. All other styles should exist as single lines."
   </template>
   <script>
     (function() {
+
+      // Toggle the display of the spinner.
+      var toggleSpinner = function() {
+        var spinner = document.querySelector('paper-spinner');
+        spinner.active = !spinner.active;
+      };
+
+      // Ajax request service.
       var ajaxService = {
         // Generating request to Github API.
-        gettingRepositoryInfo: function() {
+        generateRequest: function() {
+          toggleSpinner();
           this.$.ajax.generateRequest();
         },
         // Setting the request target url.
@@ -15054,14 +15571,17 @@ styles. All other styles should exist as single lines."
         },
         // Callback on successful request.
         onAjaxSucces: function() {
+          toggleSpinner();
           this.set('error', {status: true});
         },
         // Callback on request error.
         onAjaxError: function() {
-        this.set('error', {status: false, text: 'No matching repository was found'});
+          toggleSpinner();
+          this.set('error', {status: false, text: 'No matching repository was found'});
         }
       };
 
+      // Custom element declaration and behaviors.
       Polymer({
         is: 'ym-github-repo',
         // Declaring init properties of the element.
@@ -15094,7 +15614,7 @@ styles. All other styles should exist as single lines."
         },
         // Private element API.
         _settingRequestUrl: ajaxService.settingRequestUrl,
-        _gettingRepositoryInfo: ajaxService.gettingRepositoryInfo,
+        _generateRequest: ajaxService.generateRequest,
         _onAjaxError: ajaxService.onAjaxError,
         _onAjaxResponse: ajaxService.onAjaxSucces
       });

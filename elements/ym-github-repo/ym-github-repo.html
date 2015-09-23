@@ -7,14 +7,18 @@
     <div class="github-repo-wrapper">
       <h3 class="paper-font-title">Github repository block</h3>
       <div class="paper-font-body1">Fill the fields to get an info about the repository (only for public repositories).</div>
-      <!-- Two-way binding for "<input>.value" -->
       <paper-input label="Owner" class="paper-font-body2" value="{{owner}}"></paper-input>
       <paper-input label="Name" class="paper-font-body2" value="{{name}}"></paper-input>
       <span class="paper-font-code1 url">{{url}}</span>
       <!-- Search button -->
-      <p><paper-button gray-ripple raised on-click="_gettingRepositoryInfo">get repository info</paper-button></p>
+      <p>
+        <paper-button gray-ripple raised on-click="_generateRequest">get repository info</paper-button>
+        <!-- Spinner icon -->
+        <paper-spinner id="spinner" alt="Loading repository info"></paper-spinner>
+      </p>
+      <!-- Ajax error output -->
       <div> <span hidden$="{{!error.text}}">{{error.text}}</span></div>
-      <!-- Ajax call to Github API -->
+      <!-- Ajax request -->
       <iron-ajax
          id="ajax"
          url="{{url}}"
@@ -30,7 +34,9 @@
               <div>owner:</div>
               <a href="{{ajax.response.owner.url}}">{{ajax.response.owner.login}}</a>
             </li>
-            <li class="image"><iron-image preload fade sizing="contain" src="{{ajax.response.owner.avatar_url}}"></iron-image></li>
+            <li class="image">
+              <iron-image id="preload3cfade"  preload fade sizing="contain" src="{{ajax.response.owner.avatar_url}}"></iron-image>
+            </li>
             <li>
               <a href="{{ajax.response.html_url}}">{{ajax.response.name}}</a>
             </li>
@@ -43,9 +49,18 @@
   </template>
   <script>
     (function() {
+
+      // Toggle the display of the spinner.
+      var toggleSpinner = function() {
+        var spinner = document.querySelector('paper-spinner');
+        spinner.active = !spinner.active;
+      };
+
+      // Ajax request service.
       var ajaxService = {
         // Generating request to Github API.
-        gettingRepositoryInfo: function() {
+        generateRequest: function() {
+          toggleSpinner();
           this.$.ajax.generateRequest();
         },
         // Setting the request target url.
@@ -54,14 +69,17 @@
         },
         // Callback on successful request.
         onAjaxSucces: function() {
+          toggleSpinner();
           this.set('error', {status: true});
         },
         // Callback on request error.
         onAjaxError: function() {
-        this.set('error', {status: false, text: 'No matching repository was found'});
+          toggleSpinner();
+          this.set('error', {status: false, text: 'No matching repository was found'});
         }
       };
 
+      // Custom element declaration and behaviors.
       Polymer({
         is: 'ym-github-repo',
         // Declaring init properties of the element.
@@ -94,7 +112,7 @@
         },
         // Private element API.
         _settingRequestUrl: ajaxService.settingRequestUrl,
-        _gettingRepositoryInfo: ajaxService.gettingRepositoryInfo,
+        _generateRequest: ajaxService.generateRequest,
         _onAjaxError: ajaxService.onAjaxError,
         _onAjaxResponse: ajaxService.onAjaxSucces
       });
