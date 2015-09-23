@@ -12,7 +12,7 @@
       <span class="paper-font-code1 url">{{url}}</span>
       <!-- Search button -->
       <p>
-        <paper-button gray-ripple raised on-click="_gettingRepositoryInfo">get repository info</paper-button>
+        <paper-button gray-ripple raised on-click="_generateRequest">get repository info</paper-button>
         <!-- Spinner icon -->
         <paper-spinner id="spinner" alt="Loading repository info"></paper-spinner>
       </p>
@@ -35,7 +35,7 @@
               <a href="{{ajax.response.owner.url}}">{{ajax.response.owner.login}}</a>
             </li>
             <li class="image">
-              <iron-image preload fade sizing="contain" src="{{ajax.response.owner.avatar_url}}"></iron-image>
+              <iron-image id="preload3cfade"  preload fade sizing="contain" src="{{ajax.response.owner.avatar_url}}"></iron-image>
             </li>
             <li>
               <a href="{{ajax.response.html_url}}">{{ajax.response.name}}</a>
@@ -49,10 +49,18 @@
   </template>
   <script>
     (function() {
+
+      // Toggle the display of the spinner.
+      var toggleSpinner = function() {
+        var spinner = document.querySelector('paper-spinner');
+        spinner.active = !spinner.active;
+      };
+
+      // Ajax request service.
       var ajaxService = {
         // Generating request to Github API.
-        gettingRepositoryInfo: function() {
-          this.$.spinner.set('active', true);
+        generateRequest: function() {
+          toggleSpinner();
           this.$.ajax.generateRequest();
         },
         // Setting the request target url.
@@ -61,16 +69,17 @@
         },
         // Callback on successful request.
         onAjaxSucces: function() {
-          this.$.spinner.set('active', false);
+          toggleSpinner();
           this.set('error', {status: true});
         },
         // Callback on request error.
         onAjaxError: function() {
-          this.$.spinner.set('active', false);
+          toggleSpinner();
           this.set('error', {status: false, text: 'No matching repository was found'});
         }
       };
 
+      // Custom element declaration and behaviors.
       Polymer({
         is: 'ym-github-repo',
         // Declaring init properties of the element.
@@ -103,7 +112,7 @@
         },
         // Private element API.
         _settingRequestUrl: ajaxService.settingRequestUrl,
-        _gettingRepositoryInfo: ajaxService.gettingRepositoryInfo,
+        _generateRequest: ajaxService.generateRequest,
         _onAjaxError: ajaxService.onAjaxError,
         _onAjaxResponse: ajaxService.onAjaxSucces
       });

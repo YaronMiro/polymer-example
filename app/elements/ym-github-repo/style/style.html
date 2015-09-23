@@ -2,20 +2,33 @@
 <dom-module id="style">
   <template>
     <style>
-      :host {
-        display: block;
-      }
 
       :root {
-        --ym-github-repo-h3: #238f76;
-        --paper-spinner-layer-1-color: #238f76;
-        --paper-spinner-layer-2-color: #238f76;
-        --paper-spinner-layer-3-color: #238f76;
-        --paper-spinner-layer-4-color: #238f76;
+        --ym-github-repo-green: #238f76;
+        --ym-github-repo-font-family: 'Roboto', 'Noto', sans-serif;
+      }
+
+      :host {
+        display: block;
+        font-family: var(--ym-github-repo-font-family);
+      }
+
+      paper-spinner {
+        margin-left: 5px;
+        vertical-align: middle;
+        --paper-spinner-layer-1-color: var( --ym-github-repo-green);
+        --paper-spinner-layer-2-color: var( --ym-github-repo-green);
+        --paper-spinner-layer-3-color: var( --ym-github-repo-green);
+        --paper-spinner-layer-4-color: var( --ym-github-repo-green);
+      }
+      
+      paper-input {
+        --paper-input-container-focus-color: var( --ym-github-repo-green);
+        --paper-input-container-input-color: #627690;
       }
 
       h3 {
-        color: var(--ym-github-repo-h3);
+        color: var( --ym-github-repo-green);
       }
 
       paper-button {
