@@ -1,5 +1,5 @@
 body {
-  background: #192533;
+  background: #223346;
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #627690;
 }
@@ -9,6 +9,10 @@ body {
   .demo {
     padding: 8px;
     margin: 0 auto;
+
+    .highlight {
+      color: #0f97f9;
+    }
   }
 
   .paper-font-title {
@@ -31,7 +35,7 @@ body {
 	}
 
 	paper-tabs paper-tab.iron-selected {
-	  color: rgb(0, 148, 255);
+	  color:  #0f97f9;
 	}
 	paper-tabs[align-bottom] {
 	  box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.15);

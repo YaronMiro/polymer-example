@@ -5,10 +5,12 @@
   <style is="custom-style" include="style"></style>
   <template>
     <div class="github-repo-wrapper">
+      <h3 class="paper-font-title">Github repository block</h3>
+      <div class="paper-font-body1">Fill the fields to get an info about the repository (only for public repositories).</div>
       <!-- Two-way binding for "<input>.value" -->
       <paper-input label="Owner" class="paper-font-body2" value="{{owner}}"></paper-input>
       <paper-input label="Name" class="paper-font-body2" value="{{name}}"></paper-input>
-      <div class="paper-font-code1 url">{{url}}</div>
+      <span class="paper-font-code1 url">{{url}}</span>
       <!-- Search button -->
       <p><paper-button gray-ripple raised on-click="_gettingRepositoryInfo">get repository info</paper-button></p>
       <div> <span hidden$="{{!error.text}}">{{error.text}}</span></div>
