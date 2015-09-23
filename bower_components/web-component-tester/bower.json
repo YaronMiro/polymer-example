@@ -7,6 +7,7 @@
   "license": "http://polymer.github.io/LICENSE.txt",
   "ignore": [
     "*",
+    "!/data/*",
     "!/browser.js",
     "!/browser.js.map"
   ],
@@ -31,5 +32,5 @@
     "sinonjs": "^1.14.1",
     "accessibility-developer-tools": "GoogleChrome/accessibility-developer-tools#^2.7.0"
   },
-  "version": "3.3.18"
+  "version": "3.3.21"
 }

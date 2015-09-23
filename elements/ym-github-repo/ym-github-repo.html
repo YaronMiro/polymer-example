@@ -1,98 +1,29 @@
+<!-- import style  -->
+<link rel="import" href="style/style.html">
 <dom-module id="ym-github-repo">
-  <style>
-
-    :host {
-      display: block;
-    }
-
-    .github-repo-wrapper {
-      padding: 8px;
-    }
-
-    .info {
-      list-style-type: none;
-      padding: 0px;
-    }
-
-    .success,
-    .error,
-    paper-button {
-      color: white;
-    }
-
-    .success {
-      background: green;
-    }
-
-    .error {
-      background: red;
-    }
-
-    iron-image {
-      width:100px;
-      height:100px;
-      background-color: lightgray;
-    }
-
-    .image {
-      display: inline-block;
-      padding: 8px;
-      border: 1px solid rgba(128, 128, 128, 0.74);
-    }
-
-
-    .url {
-      margin-top: 5px;
-      display: inline-block;
-    }
-
-    .paper-font-code1 {
-      border-radius: 3px;
-      font-weight: 400;
-      background-color: rgba(128, 128, 128, 0.16);
-      padding: 5px 7px 5px 7px;
-    }
-
-    paper-button {
-      margin: 0px;
-      background-color: #0072D4;
-    }
-
-    paper-button::shadow paper-ripple {
-    }
-
-    input, paper-button {
-      width: 100%;
-    }
-
-  </style>
+  <!-- include the shared styles -->
+  <style is="custom-style" include="style"></style>
   <template>
-
     <div class="github-repo-wrapper">
+      <h3 class="paper-font-title">Github repository block</h3>
+      <div class="paper-font-body1">Fill the fields to get an info about the repository (only for public repositories).</div>
       <!-- Two-way binding for "<input>.value" -->
       <paper-input label="Owner" class="paper-font-body2" value="{{owner}}"></paper-input>
       <paper-input label="Name" class="paper-font-body2" value="{{name}}"></paper-input>
+      <span class="paper-font-code1 url">{{url}}</span>
       <!-- Search button -->
-      
-      <p><paper-button gray-ripple raised on-click="gettingRepositoryInfo">get repository info</paper-button></p>
-
-      <div class="paper-font-title">Github API repository url</div>
-      <div class="paper-font-code1 url">{{url}}</div>
-
-      <div class="paper-font-title">Status:</div>
-      <div> <span hidden$="{{!message.text}}" class$="{{message.class}}">{{message.text}}</span></div>
-        
-
+      <p><paper-button gray-ripple raised on-click="_gettingRepositoryInfo">get repository info</paper-button></p>
+      <div> <span hidden$="{{!error.text}}">{{error.text}}</span></div>
       <!-- Ajax call to Github API -->
       <iron-ajax
          id="ajax"
          url="{{url}}"
          handle-as="json"
-         on-error="onAjaxError"
-         on-response="onAjaxResponse"
+         on-error="_onAjaxError"
+         on-response="_onAjaxResponse"
          last-response="{{ajax.response}}">
        </iron-ajax>
-      <section class="info-wrapper" hidden$="{{!message.status}}">
+      <section class="info-wrapper" hidden$="{{!error.status}}">
           <!-- Ajax response data render to markup -->
           <ul class="info">
             <li>
@@ -110,26 +41,30 @@
       </section>
     </div>
   </template>
-
   <script>
     (function() {
       var ajaxService = {
+        // Generating request to Github API.
         gettingRepositoryInfo: function() {
           this.$.ajax.generateRequest();
         },
+        // Setting the request target url.
         settingRequestUrl: function(owner, name) {
           return 'https://api.github.com/repos/' + owner + '/' + name;
         },
-        onAjaxError: function() {
-        this.set('message', { class: 'error', status: false, text: 'No matching repository was found :('} );
-        },
+        // Callback on successful request.
         onAjaxSucces: function() {
-         this.set('message', { class: 'success', status: true,  text: 'A Repository match was found! :)'} );
+          this.set('error', {status: true});
+        },
+        // Callback on request error.
+        onAjaxError: function() {
+        this.set('error', {status: false, text: 'No matching repository was found'});
         }
       };
 
       Polymer({
         is: 'ym-github-repo',
+        // Declaring init properties of the element.
         properties: {
           owner: {
             type: String,
@@ -139,17 +74,16 @@
             type: String,
             value: 'AngularJS-UI-Router-Demo'
           },
-          message: {
+          error: {
             type: Object,
             value: {
               text: '',
-              class: '',
               status: false
             }
           },
           url: {
             type: String,
-            computed: 'settingRequestUrl(owner, name)'
+            computed: '_settingRequestUrl(owner, name)'
           },
           ajax: {
             type: Object,
@@ -158,10 +92,11 @@
             }
           }
         },
-        settingRequestUrl: ajaxService.settingRequestUrl,
-        gettingRepositoryInfo: ajaxService.gettingRepositoryInfo,
-        onAjaxError: ajaxService.onAjaxError,
-        onAjaxResponse: ajaxService.onAjaxSucces
+        // Private element API.
+        _settingRequestUrl: ajaxService.settingRequestUrl,
+        _gettingRepositoryInfo: ajaxService.gettingRepositoryInfo,
+        _onAjaxError: ajaxService.onAjaxError,
+        _onAjaxResponse: ajaxService.onAjaxSucces
       });
     })();
   </script>
