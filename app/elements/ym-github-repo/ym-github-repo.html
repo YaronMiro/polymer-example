@@ -8,21 +8,20 @@
       <!-- Two-way binding for "<input>.value" -->
       <paper-input label="Owner" class="paper-font-body2" value="{{owner}}"></paper-input>
       <paper-input label="Name" class="paper-font-body2" value="{{name}}"></paper-input>
-      <!-- Search button -->
-      <p><paper-button gray-ripple raised on-click="gettingRepositoryInfo">get repository info</paper-button></p>
-      <div class="paper-font-title">Github API repository url</div>
       <div class="paper-font-code1 url">{{url}}</div>
-      <div> <span hidden$="{{!message.text}}">{{message.text}}</span></div>
+      <!-- Search button -->
+      <p><paper-button gray-ripple raised on-click="_gettingRepositoryInfo">get repository info</paper-button></p>
+      <div> <span hidden$="{{!error.text}}">{{error.text}}</span></div>
       <!-- Ajax call to Github API -->
       <iron-ajax
          id="ajax"
          url="{{url}}"
          handle-as="json"
-         on-error="onAjaxError"
-         on-response="onAjaxResponse"
+         on-error="_onAjaxError"
+         on-response="_onAjaxResponse"
          last-response="{{ajax.response}}">
        </iron-ajax>
-      <section class="info-wrapper" hidden$="{{!message.status}}">
+      <section class="info-wrapper" hidden$="{{!error.status}}">
           <!-- Ajax response data render to markup -->
           <ul class="info">
             <li>
@@ -43,22 +42,27 @@
   <script>
     (function() {
       var ajaxService = {
+        // Generating request to Github API.
         gettingRepositoryInfo: function() {
           this.$.ajax.generateRequest();
         },
+        // Setting the request target url.
         settingRequestUrl: function(owner, name) {
           return 'https://api.github.com/repos/' + owner + '/' + name;
         },
-        onAjaxError: function() {
-        this.set('message', { status: false, text: 'No matching repository was found'} );
-        },
+        // Callback on successful request.
         onAjaxSucces: function() {
-         this.set('message', { status: true} );
+          this.set('error', {status: true});
+        },
+        // Callback on request error.
+        onAjaxError: function() {
+        this.set('error', {status: false, text: 'No matching repository was found'});
         }
       };
 
       Polymer({
         is: 'ym-github-repo',
+        // Declaring init properties of the element.
         properties: {
           owner: {
             type: String,
@@ -68,7 +72,7 @@
             type: String,
             value: 'AngularJS-UI-Router-Demo'
           },
-          message: {
+          error: {
             type: Object,
             value: {
               text: '',
@@ -77,7 +81,7 @@
           },
           url: {
             type: String,
-            computed: 'settingRequestUrl(owner, name)'
+            computed: '_settingRequestUrl(owner, name)'
           },
           ajax: {
             type: Object,
@@ -86,10 +90,11 @@
             }
           }
         },
-        settingRequestUrl: ajaxService.settingRequestUrl,
-        gettingRepositoryInfo: ajaxService.gettingRepositoryInfo,
-        onAjaxError: ajaxService.onAjaxError,
-        onAjaxResponse: ajaxService.onAjaxSucces
+        // Private element API.
+        _settingRequestUrl: ajaxService.settingRequestUrl,
+        _gettingRepositoryInfo: ajaxService.gettingRepositoryInfo,
+        _onAjaxError: ajaxService.onAjaxError,
+        _onAjaxResponse: ajaxService.onAjaxSucces
       });
     })();
   </script>
