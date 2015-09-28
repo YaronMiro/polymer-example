@@ -63,13 +63,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <body unresolved class="fullbleed layout vertical">
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
-      <paper-drawer-panel force-narrow="true">
+      <iron-media-query query="(max-width: 640px)" query-matches="{{ mobileWidth }}"></iron-media-query>
+      <paper-drawer-panel force-narrow="true" id="paperDrawerPanel">
           <paper-header-panel drawer>
-
+              <paper-menu attr-for-selected="name" selected="{{ page }}" on-iron-select="onMenuSelect">
+                  <paper-item name="demo-1">Demo-1</paper-item>
+                  <paper-item name="demo-2">Demo-2</paper-item>
+                  <paper-item name="demo-3">Demo-3</paper-item>
+              </paper-menu>
           </paper-header-panel>
           <paper-header-panel main>
               <paper-toolbar>
-                  <iron-media-query query="(max-width: 640px)" query-matches="{{ mobileWidth }}"></iron-media-query>
                   <paper-icon-button icon="menu" hidden$="{{ !mobileWidth }}" paper-drawer-toggle></paper-icon-button>
                   <paper-tabs selected="{{ page }}" hidden$="{{ mobileWidth }}" attr-for-selected="name">
                       <paper-tab name="demo-1" class="paper-font-title"><i class="fa fa-github"></i> Demo 1</paper-tab>
