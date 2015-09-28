@@ -26,10 +26,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     // selected is an index by default.
     var pages = document.querySelector('iron-pages');
-    pages.selected = 0;
+    pages.selected = 'demo-1';
 
     var tabs = document.querySelector('paper-tabs');
-    tabs.selected = 0;
+    tabs.selected = 'demo-1';
 
     // imports are loaded and elements have been registered
   });

@@ -63,34 +63,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <body unresolved class="fullbleed layout vertical">
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
-  <div class="container">
-    <paper-tabs selected="{{selectedTab}}">
-      <paper-tab class="paper-font-title"><i class="fa fa-github"></i> Demo 1</paper-tab>
-      <paper-tab class="paper-font-title">Demo 2</paper-tab>
-      <paper-tab class="paper-font-title">Demo 3</paper-tab>
-    </paper-tabs>
-    <iron-pages selected="[[selectedTab]]">
-      <div>
-        <div class="demo">
-        <h3 class="paper-font-title">Demo 1 - Github public repositories info</h3>
-        <section class="paper-font-body1">
-    Including this <span class="highlight"> &lt;ym-github-repo&gt;&lt;/ym-github-repo&gt;</span> will render the the github repository block.
-        </section>
-        <paper-material>
-          <ym-github-repo></ym-github-repo>
-        </paper-material>
-        </div>
-      </div>
-      <div>Page 2</div>
-      <div>Page 3</div>
-    </iron-pages>
-    <footer class="horizontal layout">
-      <a class="flex" href="http://www.gizra.com/" target="_blank">gizra</a>
-      <a class="flex" href="https://github.com/YaronMiro" target="_blank">Yaron Miro</a>
-      <a class="flex" href="https://github.com/YaronMiro/polymer-example" target="_blank"> Get the code</a>
-    </footer>
-  </div>
-  
+      <paper-drawer-panel force-narrow="true">
+          <paper-header-panel drawer>
+
+          </paper-header-panel>
+          <paper-header-panel main>
+              <paper-toolbar>
+                  <iron-media-query query="(max-width: 640px)" query-matches="{{ mobileWidth }}"></iron-media-query>
+                  <paper-icon-button icon="menu" hidden$="{{ !mobileWidth }}" paper-drawer-toggle></paper-icon-button>
+                  <paper-tabs selected="{{ page }}" hidden$="{{ mobileWidth }}" attr-for-selected="name">
+                      <paper-tab name="demo-1" class="paper-font-title"><i class="fa fa-github"></i> Demo 1</paper-tab>
+                      <paper-tab name="demo-2" class="paper-font-title">Demo 2</paper-tab>
+                      <paper-tab name="demo-3" class="paper-font-title">Demo 3</paper-tab>
+                  </paper-tabs>
+              </paper-toolbar>
+                  <iron-pages attr-for-selected="name" selected="[[ page ]]">
+                      <div name="demo-1">
+                          <div class="demo">
+                              <h3 class="paper-font-title">Demo 1 - Github public repositories info</h3>
+                              <section class="paper-font-body1">
+                                  Including this <span class="highlight"> &lt;ym-github-repo&gt;&lt;/ym-github-repo&gt;</span> will render the the github repository block.
+                              </section>
+                              <paper-material>
+                                  <ym-github-repo></ym-github-repo>
+                              </paper-material>
+                          </div>
+                      </div>
+                      <div name="demo-2">Page 2</div>
+                      <div name="demo-3">Page 3</div>
+                  </iron-pages>
+                  <footer class="horizontal layout">
+                      <a class="flex" href="http://www.gizra.com/" target="_blank">gizra</a>
+                      <a class="flex" href="https://github.com/YaronMiro" target="_blank">Yaron Miro</a>
+                      <a class="flex" href="https://github.com/YaronMiro/polymer-example" target="_blank"> Get the code</a>
+                  </footer>
+          </paper-header-panel>
+      </paper-drawer-panel>
   </template>
 
   <!-- build:js scripts/app.js -->
