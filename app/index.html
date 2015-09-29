@@ -20,8 +20,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- Place favicon.ico in the `app/` directory -->
 
   <!--Google fonts -->
-  <link href='http://fonts.googleapis.com/css?family=Abril+Fatface' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <!--<link href='http://fonts.googleapis.com/css?family=Abril+Fatface' rel='stylesheet' type='text/css'>-->
+  <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">-->
 
   <!-- Chrome for Android theme color -->
   <meta name="theme-color" content="#303F9F">
@@ -66,7 +66,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <iron-media-query query="(max-width: 640px)" query-matches="{{ mobileWidth }}"></iron-media-query>
       <paper-drawer-panel force-narrow="true" id="paperDrawerPanel">
           <paper-header-panel drawer>
-              <paper-menu attr-for-selected="name" selected="{{ page }}" on-iron-select="onMenuSelect">
+              <paper-menu id="paperMenu" attr-for-selected="name" selected="{{ page }}" on-iron-select="onMenuSelect">
                   <paper-item name="demo-1">Demo-1</paper-item>
                   <paper-item name="demo-2">Demo-2</paper-item>
                   <paper-item name="demo-3">Demo-3</paper-item>
@@ -82,19 +82,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   </paper-tabs>
               </paper-toolbar>
                   <iron-pages attr-for-selected="name" selected="[[ page ]]">
-                      <div name="demo-1">
-                          <div class="demo">
-                              <h3 class="paper-font-title">Demo 1 - Github public repositories info</h3>
-                              <section class="paper-font-body1">
-                                  Including this <span class="highlight"> &lt;ym-github-repo&gt;&lt;/ym-github-repo&gt;</span> will render the the github repository block.
-                              </section>
-                              <paper-material>
-                                  <ym-github-repo></ym-github-repo>
-                              </paper-material>
-                          </div>
-                      </div>
-                      <div name="demo-2">Page 2</div>
-                      <div name="demo-3">Page 3</div>
+                      <section name="demo-1">
+                        <header>
+                          <paper-material class="green">
+                            <h3 class="paper-font-title">Demo 1 - Github public repositories info</h3>
+                            <div class="paper-font-body1">
+                              To get the Github repository block all you need is to the following element:
+                            </div>
+                          </paper-material>
+                        </header>
+                        <paper-material class="cyan">
+                          <h3 class="paper-font-title">Custom element</h3>
+                          <div class="paper-font-body1">&lt;ym-github-repo&gt;&lt;/ym-github-repo&gt;</div>
+                        </paper-material>
+                        <paper-material>
+                            <ym-github-repo></ym-github-repo>
+                        </paper-material>
+                      </section>
+                      <section name="demo-2">Page 2</section>
+                      <section name="demo-3">Page 3</section>
                   </iron-pages>
                   <footer class="horizontal layout">
                       <a class="flex" href="http://www.gizra.com/" target="_blank">gizra</a>

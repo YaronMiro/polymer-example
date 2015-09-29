@@ -27,8 +27,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   }
 
   :root {
-
-    --accent-color: #0f97f9;
+    --cyan: #0f97f9;
+    --cyan-dark: #0f5aa7;
+    --green: #238F76;
+    --green-dark: #084A3B;
+    --accent-color: var(--cyan);
 
     /* Components */
 
@@ -44,11 +47,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       };
     }
 
+    #paperDrawerPanel {
+      --paper-drawer-panel-left-drawer-container: {
+      background-color: #223346;
+    };
 
-    /* paper-drawer-panel */
-    --drawer-menu-color: #ffffff;
-    --drawer-border-color: 1px solid #ccc;
-    --drawer-toolbar-border-color: 1px solid rgba(0, 0, 0, 0.22);
+    paper-menu {
+      --paper-menu-background-color: red;
+    };
 
     /* paper-menu */
     --paper-menu-background-color: #fff;
@@ -67,16 +73,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   }
 
   paper-scroll-header-panel {
-    height: 100%;
+    /*height: 100%;*/
+  }
+
+  .paper-font-title {
+    margin-top: 0px;
   }
 
   paper-material {
-    /*border-radius: 2px;*/
-    /*height: 100%;*/
-    /*padding: 16px 0 16px 0;*/
-    /*width: calc(98.66% - 16px);*/
-    /*margin: 16px auto;*/
-    /*background: white;*/
+    border-radius: 2px;
+    padding: 16px;
+    margin: 16px auto;
+    width: 80%;
+    background: white;
+  }
+
+  paper-material.green,
+  paper-material.cyan{
+    color: white;;
+  }
+
+  paper-material.green {
+    background: var(--green);
+  }
+
+  paper-material.cyan {
+    background: var(--cyan);
+  }
+
+  paper-material.green h3 {
+    color: var(--green-dark);
+  }
+
+  paper-material.cyan h3 {
+    color: var(--cyan-dark);
   }
 
   paper-menu iron-icon {
